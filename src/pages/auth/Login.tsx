@@ -1,5 +1,6 @@
 import {TextInput} from "../../component";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import UserServices from "../../services/UserServices/UserServices";
 
 
 const Login = () => {
@@ -13,6 +14,14 @@ const Login = () => {
         const {name, value} = event.target;
         setData((prev) => ({...prev, [name]: value}));
     }
+
+    const GetUsers = async () => {
+        return await UserServices.GetUsers()
+    }
+
+    useEffect(() => {
+        GetUsers().then(async (data) => {console.log(data)});
+    }, []);
 
     return (
         <div className="w-screen h-screen bg-primary-blue">
