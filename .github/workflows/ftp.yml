@@ -1,0 +1,49 @@
+name: 🚀 Deploy website on push
+on:
+  push:
+    branches:
+      - main
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 16
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+      
+    - name: 🔨 Build Project
+      run: |
+        touch .env
+        echo REACT_APP_BACKEND_URL=${{secrets.BACKEND_URL}} >> .env
+        echo REACT_APP_SECRET_KEY=${{SECRET_KEY}} >> .env
+        npm install
+        npm run build
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with:
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: 'build/'
+        git-ftp-args: '--all'
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/.idea/**
+          **/public/**
+          **/src/**
+          .gitignore
+          package.json
+          package-lock.json
+          tailwind.config.js
+          tsconfig.json
+          .git-ftp-include
+          README.md
+          fileToExclude.txt
