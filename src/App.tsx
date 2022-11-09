@@ -1,6 +1,6 @@
 import React from 'react';
 import {Routes, Route} from "react-router-dom"
-import {Login, Register} from "./pages/auth";
+import {Active, Login, Register} from "./pages/auth";
 import {AuthContextProvider, UiContextProvider} from "./context";
 import {DashboardRoute, ProtectedRoute} from "./routes";
 import {CookiesProvider} from "react-cookie";
@@ -17,6 +17,7 @@ function App() {
                       </Route>
                       <Route path="/login" element={<Login/>}/>
                       <Route path="/register" element={<Register/>}/>
+                      <Route path="/active" element={<Active/>}/>
                   </Routes>
               </UiContextProvider>
           </AuthContextProvider>

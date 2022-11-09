@@ -8,6 +8,14 @@ export interface IUser {
     token: string;
 }
 
+export const sleep = async (duration: number) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve("ok");
+        }, duration);
+    });
+}
+
 export const generateEncrypt = (data: any): string => {
     const encryptData = window.btoa(JSON.stringify(data));
     return encrypt(encryptData, `${process.env.REACT_APP_SECRET_KEY}`);
