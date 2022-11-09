@@ -11,7 +11,7 @@ const AxiosDeleteData = (type: "json" | "from-data", accept: "json" | "blob", pa
             let message: Error;
             if(axios.isAxiosError(error) && error.response?.data){
                 const responseData = error.response?.data as ObjectError;
-                message = responseData["error"]? new Error(responseData.error) : new Error(error.message);
+                message = responseData["message"]? new Error(responseData.message) : new Error(error.message);
             }else{
                 message = error as Error;
             }

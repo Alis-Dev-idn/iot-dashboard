@@ -26,7 +26,7 @@ export interface AxiosResponse<T = never> {
 }
 
 export interface ObjectError {
-    error?: string;
+    message?: string;
 }
 
 
