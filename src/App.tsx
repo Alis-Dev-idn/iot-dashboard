@@ -10,7 +10,7 @@ function App() {
   return (
       <CookiesProvider>
           <AuthContextProvider>
-              <AuthContextProvider>
+              <UiContextProvider>
                   <Routes>
                       <Route path="*" element={<ProtectedRoute/>}>
                           <Route path="/*" element={<DashboardRoute/>}/>
@@ -18,7 +18,7 @@ function App() {
                       <Route path="/login" element={<Login/>}/>
                       <Route path="/register" element={<Register/>}/>
                   </Routes>
-              </AuthContextProvider>
+              </UiContextProvider>
           </AuthContextProvider>
       </CookiesProvider>
   );

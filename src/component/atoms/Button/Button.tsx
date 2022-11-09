@@ -1,5 +1,5 @@
 import {Oval} from "react-loader-spinner";
-import React, {useState} from "react";
+import React from "react";
 
 
 interface PropType {
