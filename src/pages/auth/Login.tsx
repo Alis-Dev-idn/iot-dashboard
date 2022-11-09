@@ -55,7 +55,6 @@ const Login = () => {
             const dataEncrypt = generateEncrypt(data);
             const response = await UserServices.UserLogin({data: dataEncrypt});
             const encryptRespond = generateEncrypt(response.data);
-            console.log(encryptRespond);
             if(encryptRespond)
                 authContext?.SetIUser({data: encryptRespond, isLogin: true});
             setLoading(false);

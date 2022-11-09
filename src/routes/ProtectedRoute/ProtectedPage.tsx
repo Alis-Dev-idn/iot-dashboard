@@ -20,13 +20,12 @@ const ProtectedRoute= () => {
             authContext?.SetIUser(cookies.component as IUser);
         }
         await sleep(1000);
-
         setLoading(false);
     }
 
     useEffect(() => {
         VerifyData();
-
+        if(authContext?.IUser.isLogin) setLoading(false);
         // eslint-disable-next-line
     }, []);
     if(loading) return <>Loading ...</>
