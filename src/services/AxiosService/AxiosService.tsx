@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig} from "axios";
-import {decrypt} from "n-krypta";
 import {Cookies} from "react-cookie";
-import {IUser} from "../../utils/Utils";
+import {decryptData, IUser} from "../../utils/Utils";
+import {IUserData} from "../UserServices/User";
 const cookies = new Cookies();
 
 
@@ -35,8 +35,8 @@ export const AxiosServices = (props: PropTypes) => {
     const secret = process.env.REACT_APP_SECRET_KEY;
     const dataCookies = cookies.get("component");
     if(dataCookies && secret){
-        const dataDecrypt = decrypt(dataCookies, secret) as IUser;
-        token = dataDecrypt.token;
+        const decrypt = decryptData(dataCookies.data);
+        token = decrypt.token;
     }
 
     return axios.create({

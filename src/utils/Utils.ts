@@ -1,11 +1,8 @@
 import {encrypt, decrypt} from "n-krypta";
 
 export interface IUser {
-    name: string;
-    email: string;
-    role: string;
+    data: string
     isLogin: boolean;
-    token: string;
 }
 
 export const sleep = async (duration: number) => {
@@ -21,7 +18,8 @@ export const generateEncrypt = (data: any): string => {
     return encrypt(encryptData, `${process.env.REACT_APP_SECRET_KEY}`);
 }
 
-export const decryptData = (data: any): string => {
-    const decrypt_data = window.btoa(JSON.stringify(data));
-    return decrypt(decrypt_data, `${process.env.REACT_APP_SECRET_KEY}`)
+export const decryptData = (data: any): any => {
+    const decrypt_data  = decrypt(data, `${process.env.REACT_APP_SECRET_KEY}`);
+    const result = window.atob(decrypt_data);
+    return JSON.parse(result);
 }

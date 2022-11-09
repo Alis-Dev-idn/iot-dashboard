@@ -1,4 +1,5 @@
 import {AxiosPostData, AxiosReqData} from "../AxiosService"
+import {IUserData} from "./User";
 
 class UserServices {
     static path = "/user";
@@ -7,8 +8,8 @@ class UserServices {
         return await AxiosReqData("json", "json", this.path);
     }
 
-    public static async UserLogin(body: {data: string}): Promise<any> {
-        return await AxiosPostData("json", "json", `${this.path}/login`, body);
+    public static async UserLogin(body: {data: string}): Promise<IUserData> {
+        return await AxiosPostData("json", "json", `${this.path}/login`, body) as IUserData;
     }
 
     public static async UserRegister(body: {data: string}): Promise<any> {

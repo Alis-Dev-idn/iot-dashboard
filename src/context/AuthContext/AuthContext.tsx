@@ -13,16 +13,14 @@ export const AuthContext = createContext<{
 
 export const AuthContextProvider = (props: PropTypes) => {
     const [IUser, setUser] = useState<IUser>({
-        name: "",
-        email: "",
-        role: "",
+        data: "",
         isLogin: false,
-        token: ""
     });
 
     const SetIUser = (data: IUser) => {
         setUser(data);
     }
+
     return (
         <AuthContext.Provider value={{IUser, SetIUser}}>
             {props.children}

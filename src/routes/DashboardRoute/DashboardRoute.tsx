@@ -8,8 +8,8 @@ const DashboardRoute = () => {
     return (
         <TamplateDashboard>
             <Routes>
-                <Route path="*" element={<NotFound/>}/>
-                <Route path="/dashboard" element={<Dashboard/>}/>
+                <Route path="/not" element={<NotFound/>}/>
+                <Route path="/" element={<Dashboard/>}/>
             </Routes>
         </TamplateDashboard>
     )

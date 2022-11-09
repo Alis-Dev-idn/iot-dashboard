@@ -12,8 +12,8 @@ function App() {
           <AuthContextProvider>
               <UiContextProvider>
                   <Routes>
-                      <Route path="*" element={<ProtectedRoute/>}>
-                          <Route path="/*" element={<DashboardRoute/>}/>
+                      <Route path="/*" element={<ProtectedRoute/>}>
+                          <Route path="*" element={<DashboardRoute/>}/>
                       </Route>
                       <Route path="/login" element={<Login/>}/>
                       <Route path="/register" element={<Register/>}/>

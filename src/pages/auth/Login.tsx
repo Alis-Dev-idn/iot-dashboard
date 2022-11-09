@@ -1,11 +1,15 @@
 import {Alert, Button, TextInput} from "../../component";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import UserServices from "../../services/UserServices/UserServices";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {generateEncrypt} from "../../utils/Utils";
-
+import {AuthContext} from "../../context";
+import Cookies from "universal-cookie"
+const cookies = new Cookies();
 
 const Login = () => {
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [show, setShow] = useState(false);
     const [message, setMessage] = useState("");
@@ -50,8 +54,13 @@ const Login = () => {
             setLoading(true);
             const dataEncrypt = generateEncrypt(data);
             const response = await UserServices.UserLogin({data: dataEncrypt});
-            console.log(response);
+            const encryptRespond = generateEncrypt(response.data);
+            console.log(encryptRespond);
+            if(encryptRespond)
+                authContext?.SetIUser({data: encryptRespond, isLogin: true});
             setLoading(false);
+            cookies.set("component", {data: encryptRespond, isLogin: true});
+            navigate("/");
         }catch (error){
             setMessage((error as Error).message)
             setShow(true);
