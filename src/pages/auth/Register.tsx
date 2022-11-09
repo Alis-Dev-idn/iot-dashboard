@@ -2,6 +2,7 @@ import {Alert, Button, TextInput} from "../../component";
 import {useState} from "react";
 import {Link} from "react-router-dom";
 import UserServices from "../../services/UserServices/UserServices";
+import {generateEncrypt} from "../../utils/Utils";
 
 
 const Register = () => {
@@ -38,8 +39,8 @@ const Register = () => {
         if(data.username && data.email && !data.password) return createAlert("Password dibutuhkan", "warning");
         if(! isValidEmail(data.email)) return createAlert("Email not valid", "warning");
         try{
-            const response = await UserServices.UserRegister(data);
-            console.log(response);
+            const dataEncrypt = generateEncrypt(data);
+            await UserServices.UserRegister({data: dataEncrypt});
             createAlert("berhasil membuat akun, silakan periksa email untuk aktifasi akun", "success");
         }catch (error){
             setLoading(false);
@@ -61,7 +62,7 @@ const Register = () => {
                         <div className="flex flex-col space-y-7 h-full">
                             <div className="py-0">
                                 <p className="text-white text-[35px] font-font1 opacity-70">Register</p>
-                                <p className="text-white text-sm font-font1 opacity-70">Masukkan Username, Email dan Password untuk Login</p>
+                                <p className="text-white text-sm font-font1 opacity-70">Masukkan Username, Email dan Password untuk Register</p>
                             </div>
                             <div className="flex flex-col justify-center space-y-2 h-full">
                                 <div className="">

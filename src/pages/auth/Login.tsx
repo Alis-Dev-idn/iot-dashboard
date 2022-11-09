@@ -1,7 +1,8 @@
 import {Alert, Button, TextInput} from "../../component";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import UserServices from "../../services/UserServices/UserServices";
 import {Link} from "react-router-dom";
+import {generateEncrypt} from "../../utils/Utils";
 
 
 const Login = () => {
@@ -18,10 +19,6 @@ const Login = () => {
     const OnchangeTextInput = (event: any) => {
         const {name, value} = event.target;
         setData((prev) => ({...prev, [name]: value}));
-    }
-
-    const GetUsers = async () => {
-        return await UserServices.GetUsers()
     }
 
     const isValidEmail = (email: string) => {
@@ -51,7 +48,8 @@ const Login = () => {
         }
         try{
             setLoading(true);
-            const response = await UserServices.UserLogin(data);
+            const dataEncrypt = generateEncrypt(data);
+            const response = await UserServices.UserLogin({data: dataEncrypt});
             console.log(response);
             setLoading(false);
         }catch (error){
@@ -60,10 +58,6 @@ const Login = () => {
             setLoading(false);
         }
     }
-
-    useEffect(() => {
-        GetUsers().then(async (data) => {console.log(data)});
-    }, []);
 
     return (
         <>
