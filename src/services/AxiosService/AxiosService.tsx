@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig} from "axios";
 import {Cookies} from "react-cookie";
-import {decryptData, IUser} from "../../utils/Utils";
-import {IUserData} from "../UserServices/User";
+import {decryptData} from "../../utils/Utils";
 const cookies = new Cookies();
 
 
