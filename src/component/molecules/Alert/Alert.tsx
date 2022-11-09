@@ -24,7 +24,7 @@ const Alert = (props: PropTypes) => {
                                <Success className="w-10 h-10 fill-white"/> : <Warning className="w-10 h-10 fill-white"/>
                             }
 
-                            <p className="text-white font-font1 font-bold">Warning</p>
+                            <p className="text-white font-font1 font-bold">{props.type === "warning"? "Warning" : "Success"}</p>
                         </div>
                         <p className="text-white">{props.message}</p>
                     </div>

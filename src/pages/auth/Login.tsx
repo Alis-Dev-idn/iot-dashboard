@@ -1,6 +1,7 @@
 import {Alert, Button, TextInput} from "../../component";
 import {useEffect, useState} from "react";
 import UserServices from "../../services/UserServices/UserServices";
+import {Link} from "react-router-dom";
 
 
 const Login = () => {
@@ -109,6 +110,12 @@ const Login = () => {
                                         isDisable={loading}
                                         onClick={handleLogin}
                                     />
+                                </div>
+                                <div className="flex flex-row justify-center items-center space-x-2 w-full">
+                                    <p className="text-sm font-font1 text-white">don't have account?</p>
+                                    <Link to={"/register"}>
+                                        <p className="text-white hover:text-blue-500">Register</p>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
