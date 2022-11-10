@@ -7,7 +7,7 @@ import Sidebar from "./molecules/Sidebar/Sidebar";
 import Navbar from "./molecules/Navbar/Navbar";
 import SidebarMobile from "./molecules/SidebarMobile/SidebarMobile";
 import Confirm from "./molecules/Confirm/Confirm";
-
+import ScrollBars from "./atoms/ScrollBars/ScrollBars";
 
 export {
     Alert,
@@ -18,5 +18,6 @@ export {
     Navbar,
     Button,
     TextInput,
-    InputSelect
+    InputSelect,
+    ScrollBars
 }

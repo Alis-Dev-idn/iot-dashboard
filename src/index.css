@@ -11,6 +11,20 @@ body {
   font-weight: 300;
 }
 
+.track-vertical{
+  right: 2px;
+  bottom: 2px;
+  top: 2px;
+  border-radius: 3px;
+  transition: all 200ms ease !important;
+}
+
+.track-vertical:hover,
+.track-vertical:active {
+  width: 10px !important;
+  border-radius: 8px !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

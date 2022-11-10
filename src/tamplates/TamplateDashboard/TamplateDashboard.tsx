@@ -1,7 +1,6 @@
 import {ReactNode, useContext} from "react";
-import {Confirm, Loader, Navbar, Sidebar, SidebarMobile} from "../../component";
+import {Confirm, Loader, Navbar, ScrollBars, Sidebar, SidebarMobile} from "../../component";
 import {SidebarContext, UiContext} from "../../context";
-import Scrollbars from "react-custom-scrollbars-2";
 
 interface PropTypes {
     children: ReactNode
@@ -33,12 +32,14 @@ const TamplateDashboard = (props: PropTypes) => {
                 </div>
                 <div className="flex flex-col justify-center w-full h-full space-y-3">
                     <Navbar/>
-                    <div className="w-full h-full bg-blue-2 rounded-xl px-3 py-3">
-                        <Scrollbars>
+                    <div className="w-full h-full bg-blue-2 rounded-xl overflow-hidden">
+                        <ScrollBars>
                             <section>
-                                {props.children}
+                                <div className="px-3 py-3">
+                                    {props.children}
+                                </div>
                             </section>
-                        </Scrollbars>
+                        </ScrollBars>
                     </div>
                 </div>
             </div>
