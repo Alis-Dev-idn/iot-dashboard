@@ -10,7 +10,8 @@ module.exports = {
         height: "height",
       },
       colors: {
-        "primary-blue": "#1b2e4b"
+        "primary-blue": "#1b2e4b",
+        "blue-2": "#637ea2"
       },
       fontFamily: {
         font1: ["Merriweather", "serif"]
