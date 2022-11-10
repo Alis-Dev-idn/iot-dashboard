@@ -10,9 +10,16 @@ interface IAlert {
     type?: "warning" | "success";
 }
 
+interface ILoading {
+    show: boolean;
+    isBlock: boolean;
+}
+
 export const UiContext = createContext<{
-    alert: IAlert
-    handleAlert: (data: IAlert) => void
+    loading: ILoading;
+    alert: IAlert;
+    handleAlert: (data: IAlert) => void;
+    handleLoading: (data: ILoading) => void;
 } | null>(null);
 
 
@@ -22,13 +29,21 @@ export const UiContextProvider = (props: PropTypes) => {
         message: "",
         type: "warning"
     });
+    const [loading, setLoading] = useState<ILoading>({
+        show: false,
+        isBlock: false
+    });
 
     const handleAlert = (data: IAlert) => {
         setAlert(data)
     }
 
+    const handleLoading = (data: ILoading) => {
+        setLoading(data);
+    }
+
     return (
-        <UiContext.Provider value={{alert, handleAlert}}>
+        <UiContext.Provider value={{alert, handleAlert, loading, handleLoading}}>
             {props.children}
         </UiContext.Provider>
     )

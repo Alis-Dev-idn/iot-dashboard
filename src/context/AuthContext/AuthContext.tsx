@@ -1,5 +1,8 @@
 import {createContext, ReactNode, useState} from "react";
 import { IUser } from "../../utils/Utils";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+
 
 interface PropTypes {
     children: ReactNode;
@@ -8,6 +11,7 @@ interface PropTypes {
 export const AuthContext = createContext<{
     IUser: IUser;
     SetIUser: (data: IUser) => void;
+    Logout: Function;
 } | null>(null);
 
 
@@ -21,8 +25,12 @@ export const AuthContextProvider = (props: PropTypes) => {
         setUser(data);
     }
 
+    const Logout = async () => {
+        await cookies.remove("component");
+    }
+
     return (
-        <AuthContext.Provider value={{IUser, SetIUser}}>
+        <AuthContext.Provider value={{IUser, SetIUser, Logout}}>
             {props.children}
         </AuthContext.Provider>
     )
