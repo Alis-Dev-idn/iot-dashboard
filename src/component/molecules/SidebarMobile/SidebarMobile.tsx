@@ -1,5 +1,5 @@
 import {ReactComponent as Close} from "../../../assets/icon/x-mark.svg";
-import {useContext, useEffect, useState} from "react";
+import {useContext} from "react";
 import {AuthContext, SidebarContext, UiContext} from "../../../context";
 import {ReactComponent as Logout} from "../../../assets/icon/logout.svg";
 import {useNavigate} from "react-router-dom";
