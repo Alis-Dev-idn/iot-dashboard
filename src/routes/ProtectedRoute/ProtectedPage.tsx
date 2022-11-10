@@ -3,6 +3,7 @@ import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context";
 import {useCookies} from "react-cookie";
 import {IUser, sleep} from "../../utils/Utils";
+import {Loader} from "../../component";
 
 
 const ProtectedRoute= () => {
@@ -28,7 +29,7 @@ const ProtectedRoute= () => {
         if(authContext?.IUser.isLogin) setLoading(false);
         // eslint-disable-next-line
     }, []);
-    if(loading) return <>Loading ...</>
+    if(loading) return <Loader show={loading} isBlock={true}/>
     return authContext?.IUser.isLogin? <Outlet/> : <Navigate to={"/login"}/>
 }
 
