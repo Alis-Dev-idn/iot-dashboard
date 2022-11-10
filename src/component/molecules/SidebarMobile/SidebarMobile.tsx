@@ -17,8 +17,20 @@ const SidebarMobile = (props: PropTypes) => {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
+        sidebarContext?.showSidebar(false);
+        uiContext?.handleConfirm({
+            show: true,
+            message: "Ingin Keluar?",
+            callback: handleConfirmLogout
+        });
+    }
+
+    const handleConfirmLogout = async () => {
+        uiContext?.handleConfirm({
+            show: false,
+            message: "",
+        });
         await authContext?.Logout();
-        sidebarContext?.showSidebar(false)
         uiContext?.handleLoading({show: true, isBlock: false});
         await sleep(2000);
         uiContext?.handleLoading({show: false, isBlock: false});

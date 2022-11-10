@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useState} from "react";
+import {createContext, ReactEventHandler, ReactNode, useState} from "react";
 
 interface PropTypes {
     children: ReactNode;
@@ -15,11 +15,22 @@ interface ILoading {
     isBlock: boolean;
 }
 
+interface IConfirm {
+    show: boolean;
+    message: string;
+    callback?: ReactEventHandler
+}
+
 export const UiContext = createContext<{
     loading: ILoading;
+    handleLoading: (data: ILoading) => void;
+
     alert: IAlert;
     handleAlert: (data: IAlert) => void;
-    handleLoading: (data: ILoading) => void;
+
+    confirm: IConfirm;
+    handleConfirm: (data: IConfirm) => void;
+
 } | null>(null);
 
 
@@ -34,6 +45,12 @@ export const UiContextProvider = (props: PropTypes) => {
         isBlock: false
     });
 
+    const [confirm, setConfirm] = useState<IAlert>({
+        show: false,
+        message: "",
+        type: "warning"
+    });
+
     const handleAlert = (data: IAlert) => {
         setAlert(data)
     }
@@ -42,8 +59,12 @@ export const UiContextProvider = (props: PropTypes) => {
         setLoading(data);
     }
 
+    const handleConfirm = (data: IConfirm) => {
+        setConfirm((prev) => ({...prev, ...data}));
+    }
+
     return (
-        <UiContext.Provider value={{alert, handleAlert, loading, handleLoading}}>
+        <UiContext.Provider value={{alert, handleAlert, loading, handleLoading, confirm, handleConfirm}}>
             {props.children}
         </UiContext.Provider>
     )

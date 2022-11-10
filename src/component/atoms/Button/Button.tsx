@@ -5,6 +5,7 @@ import React from "react";
 interface PropType {
     label: string;
     name: string;
+    className?: string;
     loading?: boolean;
     isDisable?: boolean;
     onClick: React.MouseEventHandler<HTMLButtonElement>;
@@ -14,7 +15,7 @@ const Button = (props: PropType) => {
 
     return (
         <button
-            className="bg-sky-700 px-3 py-1.5 rounded-md cursor-pointer hover:bg-sky-500 mt-5 disabled:cursor-not-allowed"
+            className={`bg-sky-700 px-3 py-1.5 rounded-md cursor-pointer hover:bg-sky-500 mt-5 disabled:cursor-not-allowed ${props.className}`}
             name={props.name}
             onClick={props.onClick}
             disabled={props.isDisable}

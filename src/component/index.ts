@@ -6,11 +6,14 @@ import Loader from "./molecules/Loader/Loader";
 import Sidebar from "./molecules/Sidebar/Sidebar";
 import Navbar from "./molecules/Navbar/Navbar";
 import SidebarMobile from "./molecules/SidebarMobile/SidebarMobile";
+import Confirm from "./molecules/Confirm/Confirm";
+
 
 export {
     Alert,
     Loader,
     Sidebar,
+    Confirm,
     SidebarMobile,
     Navbar,
     Button,

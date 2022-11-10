@@ -1,5 +1,5 @@
 import {ReactNode, useContext} from "react";
-import {Loader, Navbar, Sidebar, SidebarMobile} from "../../component";
+import {Confirm, Loader, Navbar, Sidebar, SidebarMobile} from "../../component";
 import {SidebarContext, UiContext} from "../../context";
 import Scrollbars from "react-custom-scrollbars-2";
 
@@ -12,31 +12,37 @@ const TamplateDashboard = (props: PropTypes) => {
     const uiContext = useContext(UiContext);
 
     return (
-        <>
-            <div className="w-screen h-screen bg-primary-blue overflow-hidden">
-                <Loader
-                    show={uiContext?.loading.show || false}
-                    isBlock={uiContext?.loading.isBlock || false}
-                />
-                <SidebarMobile show={sidebarContext?.show || false}/>
+        <div className="w-screen h-screen bg-primary-blue overflow-hidden">
 
-                <div className={`flex flex-row h-full md:space-x-3 py-2 px-3 ${sidebarContext?.show? "bg-white md:bg-transparent opacity-30 md:opacity-100" : ""}`}>
-                    <div className="hidden md:block">
-                        <Sidebar/>
-                    </div>
-                    <div className="flex flex-col justify-center w-full h-full space-y-3">
-                        <Navbar/>
-                        <div className="w-full h-full bg-blue-2 rounded-xl px-3 py-3">
-                            <Scrollbars>
-                                <section>
-                                    {props.children}
-                                </section>
-                            </Scrollbars>
-                        </div>
+            <Confirm
+                show={uiContext?.confirm.show || false}
+                message={uiContext?.confirm.message || ""}
+                callback={uiContext?.confirm.callback}
+            />
+
+            <Loader
+                show={uiContext?.loading.show || false}
+                isBlock={uiContext?.loading.isBlock || false}
+            />
+
+            <SidebarMobile show={sidebarContext?.show || false}/>
+
+            <div className={`flex flex-row h-full md:space-x-3 py-2 px-3 ${sidebarContext?.show? "bg-white md:bg-transparent opacity-30 md:opacity-100" : ""}`}>
+                <div className="hidden md:block">
+                    <Sidebar/>
+                </div>
+                <div className="flex flex-col justify-center w-full h-full space-y-3">
+                    <Navbar/>
+                    <div className="w-full h-full bg-blue-2 rounded-xl px-3 py-3">
+                        <Scrollbars>
+                            <section>
+                                {props.children}
+                            </section>
+                        </Scrollbars>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

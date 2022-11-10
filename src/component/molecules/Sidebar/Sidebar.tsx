@@ -22,7 +22,20 @@ const Sidebar = () => {
         setShow(false);
     }
 
-    const handleLogout = async () => {
+    const handleLogout = () => {
+        uiContext?.handleConfirm({
+            show: true,
+            message: "Ingin Keluar?",
+            callback: handleConfirmLogout
+        });
+
+    }
+
+    const handleConfirmLogout = async () => {
+        uiContext?.handleConfirm({
+            show: false,
+            message: "",
+        });
         await authContext?.Logout();
         uiContext?.handleLoading({show: true, isBlock: false});
         await sleep(2000);
