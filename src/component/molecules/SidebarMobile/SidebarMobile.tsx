@@ -1,6 +1,8 @@
 import {ReactComponent as Close} from "../../../assets/icon/x-mark.svg";
+import {ReactComponent as Home} from "../../../assets/icon/home.svg";
 import {useContext} from "react";
 import {SidebarContext} from "../../../context";
+import {Link} from "react-router-dom";
 
 
 interface PropTypes {
@@ -28,13 +30,15 @@ const SidebarMobile = (props: PropTypes) => {
                 </div>
                 <div className="w-full h-[2px] bg-white"></div>
                 <div className="flex flex-col h-full w-full">
-
-                </div>
-                <div className="flex flex-col items-start justify-end h-full w-full">
-                    {/*element*/}
-                    <div className={`flex w-full`}>
-
-                    </div>
+                    {/*Element Link*/}
+                    <Link
+                        onClick={() => sidebarContext?.showSidebar(false)}
+                        to={"/"}
+                        className="flex flex-row items-center space-x-2 hover:bg-sky-700 w-full py-2 px-1 rounded-xl"
+                    >
+                        <Home className="w-7 h-7 fill-white"/>
+                        <p className="text-white font-font1">Home</p>
+                    </Link>
                 </div>
             </div>
         </div>
