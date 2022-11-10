@@ -17,7 +17,10 @@ export const AuthContext = createContext<{
 
 export const AuthContextProvider = (props: PropTypes) => {
     const [IUser, setUser] = useState<IUser>({
-        data: "",
+        username: "",
+        email: "",
+        role: "",
+        token: "",
         isLogin: false,
     });
 

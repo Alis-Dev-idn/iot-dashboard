@@ -56,7 +56,13 @@ const Login = () => {
             const response = await UserServices.UserLogin({data: dataEncrypt});
             const encryptRespond = generateEncrypt(response.data);
             if(encryptRespond)
-                authContext?.SetIUser({data: encryptRespond, isLogin: true});
+                authContext?.SetIUser({
+                    username: response.data.username,
+                    email: response.data.email,
+                    role: response.data.role,
+                    token: response.data.token,
+                    isLogin: true
+                });
             setLoading(false);
             cookies.set("component", {data: encryptRespond, isLogin: true});
             navigate("/");

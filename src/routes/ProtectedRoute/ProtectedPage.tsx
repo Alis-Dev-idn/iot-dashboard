@@ -2,9 +2,15 @@ import {Navigate, Outlet} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context";
 import {useCookies} from "react-cookie";
-import {IUser, sleep} from "../../utils/Utils";
+import {decryptData, sleep} from "../../utils/Utils";
 import {Loader} from "../../component";
 
+interface USER {
+    username: string;
+    email: string;
+    role: string;
+    token: string;
+}
 
 const ProtectedRoute= () => {
     const authContext = useContext(AuthContext);
@@ -18,7 +24,14 @@ const ProtectedRoute= () => {
         }
 
         if(cookies.component){
-            authContext?.SetIUser(cookies.component as IUser);
+            const result = await decryptData(cookies.component.data) as USER;
+            authContext?.SetIUser({
+                username: result.username,
+                email: result.email,
+                role: result.role,
+                token: result.token,
+                isLogin: true
+            });
         }
         await sleep(1000);
         setLoading(false);
