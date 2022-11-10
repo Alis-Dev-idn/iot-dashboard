@@ -1,9 +1,6 @@
 import {ReactComponent as Close} from "../../../assets/icon/x-mark.svg";
 import {useContext} from "react";
-import {AuthContext, SidebarContext, UiContext} from "../../../context";
-import {ReactComponent as Logout} from "../../../assets/icon/logout.svg";
-import {useNavigate} from "react-router-dom";
-import {sleep} from "../../../utils/Utils";
+import {SidebarContext} from "../../../context";
 
 
 interface PropTypes {
@@ -12,30 +9,6 @@ interface PropTypes {
 
 const SidebarMobile = (props: PropTypes) => {
     const sidebarContext = useContext(SidebarContext);
-    const authContext = useContext(AuthContext);
-    const uiContext = useContext(UiContext);
-    const navigate = useNavigate();
-
-    const handleLogout = async () => {
-        sidebarContext?.showSidebar(false);
-        uiContext?.handleConfirm({
-            show: true,
-            message: "Ingin Keluar?",
-            callback: handleConfirmLogout
-        });
-    }
-
-    const handleConfirmLogout = async () => {
-        uiContext?.handleConfirm({
-            show: false,
-            message: "",
-        });
-        await authContext?.Logout();
-        uiContext?.handleLoading({show: true, isBlock: false});
-        await sleep(2000);
-        uiContext?.handleLoading({show: false, isBlock: false});
-        navigate("/login");
-    }
 
     return(
         <div className={`md:w-0 md:-ml-10 z-30 absolute overflow-hidden transition-all duration-500 h-full border border-blue-2 border-opacity-50 rounded-r-xl ${props.show? "w-[250px]" : "w-0 -ml-10"}`}>
@@ -60,13 +33,7 @@ const SidebarMobile = (props: PropTypes) => {
                 <div className="flex flex-col items-start justify-end h-full w-full">
                     {/*element*/}
                     <div className={`flex w-full`}>
-                        <div
-                            className="flex flex-row items-center space-x-2 -mt-16 w-full cursor-pointer"
-                            onClick={handleLogout}
-                        >
-                            <Logout className="w-7 h-7 fill-white"/>
-                            <p className="text-white font-bold ">Logout</p>
-                        </div>
+
                     </div>
                 </div>
             </div>

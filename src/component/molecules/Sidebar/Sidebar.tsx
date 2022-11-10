@@ -1,14 +1,7 @@
 import {ReactComponent as Angles} from "../../../assets/icon/angles-right.svg";
-import {ReactComponent as Logout} from "../../../assets/icon/logout.svg";
-import {useContext, useState} from "react";
-import {AuthContext, UiContext} from "../../../context";
-import {useNavigate} from "react-router-dom";
-import {sleep} from "../../../utils/Utils";
+import {useState} from "react";
 
 const Sidebar = () => {
-    const authContext = useContext(AuthContext);
-    const uiContext = useContext(UiContext);
-    const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [stay, setStay] = useState(false);
 
@@ -20,27 +13,6 @@ const Sidebar = () => {
     const handleMouseLeave = () => {
         if(stay) return;
         setShow(false);
-    }
-
-    const handleLogout = () => {
-        uiContext?.handleConfirm({
-            show: true,
-            message: "Ingin Keluar?",
-            callback: handleConfirmLogout
-        });
-
-    }
-
-    const handleConfirmLogout = async () => {
-        uiContext?.handleConfirm({
-            show: false,
-            message: "",
-        });
-        await authContext?.Logout();
-        uiContext?.handleLoading({show: true, isBlock: false});
-        await sleep(2000);
-        uiContext?.handleLoading({show: false, isBlock: false});
-        navigate("/login");
     }
 
     return(
@@ -59,22 +31,9 @@ const Sidebar = () => {
                 </div>
             </div>
             <div className="w-full h-[2px] bg-white"></div>
+
             <div className="flex flex-col h-full">
 
-            </div>
-            <div className="flex flex-col items-start justify-end h-full w-full">
-                <div className={`flex justify-center items-center w-full`}>
-                    <div
-                        className="flex flex-row items-center space-x-2 -mt-20 cursor-pointer"
-                        onClick={handleLogout}
-                    >
-                        <Logout className="w-8 h-8 fill-white"/>
-                        {show?
-                            <p className="text-white font-bold ">Logout</p>
-                            : null
-                        }
-                    </div>
-                </div>
             </div>
         </div>
     )
