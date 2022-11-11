@@ -7,7 +7,7 @@ interface PropTypes {
 
 const Loader = (props: PropTypes) => {
     return(
-        <div className={`absolute w-screen h-screen bg-primary-blue ${props.show? (props.isBlock? "" : "z-30 bg-opacity-50") : "hidden"}`}>
+        <div className={`absolute w-screen h-screen bg-primary-blue ${props.show? (props.isBlock? "" : "z-50 bg-opacity-50") : "hidden"}`}>
             <div className="flex flex-col justify-center items-center h-full">
                 <Grid
                     height="70"

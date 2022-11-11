@@ -1,9 +1,15 @@
 import {Button, TextInput} from "../../../component";
 import {useContext, useEffect, useState} from "react";
-import {AuthContext} from "../../../context";
+import {AuthContext, FormulirContext, UiContext} from "../../../context";
+import {sleep} from "../../../utils/Utils";
+import FormulirChangePassword from "./component/FormulirChangePassword";
+import FormulirChangeImage from "./component/FormulirChangeImage";
 
 const ProfileUser = () => {
     const authContext = useContext(AuthContext);
+    const uiContext = useContext(UiContext);
+    const formulirContext = useContext(FormulirContext);
+
     const [data, setData] = useState({
         name: "",
         username: "",
@@ -13,6 +19,56 @@ const ProfileUser = () => {
     const OnChangeTextInput = (event: any) => {
         const {name, value} = event.target;
         setData((prev) => ({...prev, [name]: value}));
+    }
+
+    const handleSaveProfile = () => {
+        uiContext?.handleConfirm({
+            show: true,
+            message: "Save Profile?",
+            callback: confirmSave
+        });
+    }
+
+    const confirmSave = async () => {
+        uiContext?.handleConfirm({
+            show: false,
+            message: "Save Profile?",
+        });
+        uiContext?.handleLoading({show: true, isBlock: false});
+        await sleep(2000);
+        uiContext?.handleLoading({show: false, isBlock: false});
+        uiContext?.handleAlert({
+            show: true,
+            type: "warning",
+            message: "Ops Something Wrong, Please Try Again Later"
+        });
+    }
+
+    const handleChangePassword = () => {
+        formulirContext?.setIFormulir({
+            className: "",
+            show: true,
+            label: "Change Password",
+            children: <FormulirChangePassword callback={handleCloseForm}/>
+        })
+    }
+
+    const handleChangeImage = () => {
+        formulirContext?.setIFormulir({
+            className: "",
+            show: true,
+            label: "Change Image Profile",
+            children: <FormulirChangeImage callback={handleCloseForm}/>
+        })
+    }
+
+    const handleCloseForm = () => {
+        formulirContext?.setIFormulir({
+            className: "",
+            show: false,
+            label: "",
+            children: <></>
+        })
     }
 
     useEffect(() => {
@@ -29,14 +85,14 @@ const ProfileUser = () => {
                 <div className="sm:w-[250px] w-full h-[300px] bg-blue-2 rounded-xl px-3 py-3">
                     <div className="flex flex-col items-center justify-center h-full">
                         <div className="bg-white h-[150px] w-[150px] rounded-full">
-
+                        {/*  take image  */}
                         </div>
                         <div>
                             <Button
                                 className="text-sm"
                                 label="Ubah Foto"
                                 name="foto"
-                                onClick={() => {}}
+                                onClick={handleChangeImage}
                             />
                         </div>
                     </div>
@@ -80,7 +136,7 @@ const ProfileUser = () => {
                                 className="text-sm"
                                 label="Change Password"
                                 name="save"
-                                onClick={() => {}}
+                                onClick={handleChangePassword}
                             />
                         </div>
                         <div className="flex justify-end w-full">
@@ -88,7 +144,7 @@ const ProfileUser = () => {
                                 className="text-sm"
                                 label="Save"
                                 name="save"
-                                onClick={() => {}}
+                                onClick={handleSaveProfile}
                             />
                         </div>
                     </div>

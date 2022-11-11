@@ -8,6 +8,8 @@ import Navbar from "./molecules/Navbar/Navbar";
 import SidebarMobile from "./molecules/SidebarMobile/SidebarMobile";
 import Confirm from "./molecules/Confirm/Confirm";
 import ScrollBars from "./atoms/ScrollBars/ScrollBars";
+import BoxFormulir from "./molecules/BoxFormulir/BoxFormulir";
+
 
 export {
     Alert,
@@ -19,5 +21,6 @@ export {
     Button,
     TextInput,
     InputSelect,
-    ScrollBars
+    ScrollBars,
+    BoxFormulir
 }

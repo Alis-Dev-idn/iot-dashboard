@@ -1,6 +1,6 @@
 import {ReactNode, useContext, useEffect, useState} from "react";
-import {Confirm, Loader, Navbar, ScrollBars, Sidebar, SidebarMobile} from "../../component";
-import {SidebarContext, UiContext} from "../../context";
+import {Alert, BoxFormulir, Confirm, Loader, Navbar, ScrollBars, Sidebar, SidebarMobile} from "../../component";
+import {FormulirContext, SidebarContext, UiContext} from "../../context";
 import {useLocation} from "react-router-dom";
 
 interface PropTypes {
@@ -11,6 +11,7 @@ const TamplateDashboard = (props: PropTypes) => {
     const [name, setName] = useState("")
     const sidebarContext = useContext(SidebarContext);
     const uiContext = useContext(UiContext);
+    const formulirContext = useContext(FormulirContext);
     const locate = useLocation();
 
     useEffect(() => {
@@ -35,6 +36,20 @@ const TamplateDashboard = (props: PropTypes) => {
             <Loader
                 show={uiContext?.loading.show || false}
                 isBlock={uiContext?.loading.isBlock || false}
+            />
+
+            <Alert
+                show={uiContext?.alert.show || false}
+                message={uiContext?.alert.message || ""}
+                type={uiContext?.alert.type}
+                callback={() => uiContext?.handleAlert({show: false, message: ""})}
+            />
+
+            <BoxFormulir
+                className={formulirContext?.formulir.className}
+                show={formulirContext?.formulir.show || false}
+                label={formulirContext?.formulir.label || ""}
+                children={formulirContext?.formulir.children || <></>}
             />
 
             <SidebarMobile show={sidebarContext?.show || false}/>

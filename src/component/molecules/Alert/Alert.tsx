@@ -12,7 +12,7 @@ interface PropTypes {
 
 const Alert = (props: PropTypes) => {
     return (
-        <div className={`fixed z-20 w-full h-full transition-all duration-300 ease-out ${props.show? "scale-100 opacity-100" : "scale-0 opacity-0"}`}>
+        <div className={`fixed z-50 w-full h-full transition-all duration-300 ease-out ${props.show? "scale-100 opacity-100" : "scale-0 opacity-0"}`}>
             <div className="flex justify-center items-center w-full h-full">
                 <div className="flex flex-col w-[450px] h-[160px] bg-sky-700 rounded-md shadow shadow-md px-2 py-2">
                     <div className="flex justify-end">
