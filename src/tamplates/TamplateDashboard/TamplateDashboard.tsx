@@ -1,14 +1,27 @@
-import {ReactNode, useContext} from "react";
+import {ReactNode, useContext, useEffect, useState} from "react";
 import {Confirm, Loader, Navbar, ScrollBars, Sidebar, SidebarMobile} from "../../component";
 import {SidebarContext, UiContext} from "../../context";
+import {useLocation} from "react-router-dom";
 
 interface PropTypes {
     children: ReactNode
 }
 
 const TamplateDashboard = (props: PropTypes) => {
+    const [name, setName] = useState("")
     const sidebarContext = useContext(SidebarContext);
     const uiContext = useContext(UiContext);
+    const locate = useLocation();
+
+    useEffect(() => {
+        const path = locate.pathname.split("/");
+        let pathname = "";
+        for (let i = 0; i < path.length; i++) {
+            if(path[i] !== "") pathname = `${pathname} / ${path[i]}`
+        }
+        setName(pathname);
+    }, [locate.pathname]);
+
 
     return (
         <div className="w-screen h-screen bg-primary-blue overflow-hidden">
@@ -32,12 +45,11 @@ const TamplateDashboard = (props: PropTypes) => {
                 </div>
                 <div className="flex flex-col justify-center w-full h-full space-y-3">
                     <Navbar/>
-                    <div className="w-full h-full bg-blue-2 rounded-xl overflow-hidden">
+                    <div className="text-white font-font1 ml-2 text-[14px]">Home {name}</div>
+                    <div className="w-full h-full overflow-hidden">
                         <ScrollBars>
                             <section>
-                                <div className="px-3 py-3">
-                                    {props.children}
-                                </div>
+                                {props.children}
                             </section>
                         </ScrollBars>
                     </div>
