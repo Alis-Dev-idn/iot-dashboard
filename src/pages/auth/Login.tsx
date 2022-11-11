@@ -73,6 +73,12 @@ const Login = () => {
         }
     }
 
+    const handleKeyDown = async (e: React.KeyboardEvent) => {
+        const { key } = e;
+        if (key !== "Enter") return;
+        await handleLogin();
+    };
+
     return (
         <>
             <Alert
@@ -108,6 +114,8 @@ const Login = () => {
                                         value={data.password}
                                         placeholder="Password"
                                         onChange={OnchangeTextInput}
+                                        onKeyDown={handleKeyDown}
+
                                     />
                                 </div>
                                 <div className="flex justify-end items-center">

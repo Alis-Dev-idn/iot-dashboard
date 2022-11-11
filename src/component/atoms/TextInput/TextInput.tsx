@@ -6,6 +6,7 @@ interface PropTypes {
     value: string | number;
     placeholder: string;
     onChange: React.ChangeEventHandler;
+    onKeyDown?: React.KeyboardEventHandler;
     list?: string;
     isDisabled?: boolean;
 }
@@ -21,6 +22,7 @@ const TextInput = (props: PropTypes) => {
             list={props.list}
             onChange={props.onChange}
             disabled={props.isDisabled}
+            onKeyDown={props.onKeyDown}
         />
     )
 }
