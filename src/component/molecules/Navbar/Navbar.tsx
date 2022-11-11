@@ -59,7 +59,7 @@ const Navbar = () => {
                                 <p className="">{authContext?.IUser.username.split("")[0].toUpperCase()}</p>
                             </div>
                         </div>
-                        <div className="z-10 absolute">
+                        <div className="z-10 absolute" onMouseLeave={() => setShow(false)}>
                             <div className={`flex flex-col bg-sky-800 rounded-b-md rounded-tl-md space-y-1 px-2 py-2 -ml-[90px] transition-all duration-500 overflow-hidden w-[120px] ${show? "mt-8 opacity-100" : "-mt-36 opacity-0"}`}>
                                 <div className="flex flex-col justify-center items-center">
                                     <p className="text-white font-font1 text-[14px]">Hi {authContext?.IUser.username}</p>
