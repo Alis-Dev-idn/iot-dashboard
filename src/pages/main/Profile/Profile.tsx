@@ -4,11 +4,13 @@ import {AuthContext, FormulirContext, UiContext} from "../../../context";
 import {sleep} from "../../../utils/Utils";
 import FormulirChangePassword from "./component/FormulirChangePassword";
 import FormulirChangeImage from "./component/FormulirChangeImage";
+import UserServices from "../../../services/UserServices/UserServices";
 
 const ProfileUser = () => {
     const authContext = useContext(AuthContext);
     const uiContext = useContext(UiContext);
     const formulirContext = useContext(FormulirContext);
+    const [img, setImg] = useState("");
 
     const [data, setData] = useState({
         name: "",
@@ -79,6 +81,15 @@ const ProfileUser = () => {
         })
     }, [authContext?.IUser]);
 
+    const handleData = async () => {
+        const data = await UserServices.GetProfile("ali");
+        setImg(data);
+    }
+
+    useEffect(() => {
+        handleData().then();
+    }, []);
+
     return(
         <div>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-7">
@@ -86,7 +97,7 @@ const ProfileUser = () => {
                     <div className="flex flex-col items-center justify-center h-full">
                         <div className="bg-white h-[150px] w-[150px] rounded-full overflow-hidden">
                         {/*  take image  */}
-                            <img src={`${process.env.REACT_APP_BACKEND_URL}/profile/${authContext?.IUser.username}`} alt={"user"} loading={"eager"}/>
+                            <img src={img} alt={""} loading={"eager"}/>
                         </div>
                         <div>
                             <Button

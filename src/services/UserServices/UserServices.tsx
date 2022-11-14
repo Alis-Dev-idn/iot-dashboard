@@ -24,6 +24,11 @@ class UserServices {
             .join("&");
         return await AxiosReqData("json", "json", `/active?${queryString}`);
     }
+
+    public static async GetProfile(username: string): Promise<any> {
+        let profile = await AxiosReqData("json", "blob", `/profile/${username}`) as string;
+        return URL.createObjectURL(new Blob([profile]));
+    }
 }
 
 export default UserServices;

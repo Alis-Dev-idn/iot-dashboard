@@ -2,7 +2,7 @@ import {AxiosResponse, AxiosServices, ObjectError} from "./AxiosService";
 import axios from "axios";
 
 
-const AxiosDeleteData = (type: "json" | "from-data", accept: "json" | "blob", path: string) => {
+const AxiosDeleteData = (type: "json" | "from-data", accept: "json" | "blob" | "arraybuffer", path: string) => {
     return new Promise(async (resolve, reject) => {
         try{
             const response: AxiosResponse = await AxiosServices({type: type, respond: accept}).delete(path);

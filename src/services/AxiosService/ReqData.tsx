@@ -1,7 +1,7 @@
 import {AxiosResponse, ObjectError, AxiosServices} from "./AxiosService"
 import axios from "axios";
 
-const AxiosReqData = (type: "json" | "from-data", accept: "json" | "blob", path: string, params?: string) => {
+const AxiosReqData = (type: "json" | "from-data", accept: "json" | "blob" | "arraybuffer", path: string, params?: string) => {
     return new Promise(async (resolve, reject) => {
         try{
             path = params? `${path}?${params}` : path;

@@ -2,7 +2,7 @@ import {AxiosResponse, AxiosServices, ObjectError} from "./AxiosService";
 import axios from "axios";
 
 
-const AxiosPutData = (type: "json" | "from-data", accept: "json" | "blob", path: string, body?: any) => {
+const AxiosPutData = (type: "json" | "from-data", accept: "json" | "blob" | "arraybuffer", path: string, body?: any) => {
     return new Promise(async (resolve, reject) => {
         try{
             const response: AxiosResponse = await AxiosServices({type: type, respond: accept}).put(path, body);

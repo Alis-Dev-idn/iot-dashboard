@@ -6,7 +6,7 @@ const cookies = new Cookies();
 
 interface PropTypes {
     type: "json" | "from-data";
-    respond: "json" | "blob";
+    respond: "json" | "blob" | "arraybuffer";
 }
 
 // interface CommonHeaderProperties extends HeadersDefaults {
@@ -45,6 +45,6 @@ export const AxiosServices = (props: PropTypes) => {
             "Content-Type": "application/json",
             Accept: props.type === "json"? "application/json" : "multipart/form-data"
         },
-        responseType: props.respond === "json"? "json" : "blob"
+        responseType: props.respond
     });
 }

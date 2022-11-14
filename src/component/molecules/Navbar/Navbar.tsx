@@ -1,13 +1,15 @@
 import {ReactComponent as Menu} from "../../../assets/icon/dot-menu.svg";
 import {ReactComponent as Profile} from "../../../assets/icon/user-solid.svg";
 import {ReactComponent as Logout} from "../../../assets/icon/logout.svg";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {AuthContext, SidebarContext, UiContext} from "../../../context";
 import {sleep} from "../../../utils/Utils";
 import {useNavigate} from "react-router-dom";
+import UserServices from "../../../services/UserServices/UserServices";
 
 const Navbar = () => {
     const [show, setShow] = useState(false);
+    const [img, setImg] = useState("");
     const sidebarContext = useContext(SidebarContext);
     const uiContext = useContext(UiContext);
     const authContext = useContext(AuthContext);
@@ -43,6 +45,15 @@ const Navbar = () => {
         navigate("/login");
     }
 
+    const handleData = async () => {
+        const data = await UserServices.GetProfile("ali");
+        setImg(data);
+    }
+
+    useEffect(() => {
+        handleData().then();
+    }, []);
+
     return(
         <div className="w-full bg-blue-2 h-[50px] rounded-xl px-3 py-1">
             <div className="flex flex-row items-center h-full">
@@ -52,11 +63,11 @@ const Navbar = () => {
                 <div className="w-full">
                     <div className="flex flex-row justify-end h-full w-full">
                         <div
-                            className={`w-[25px] h-full bg-white rounded-xl cursor-pointer w-full ${show? "z-20" : ""}`} title="Account"
+                            className={`w-[25px] overflow-hidden h-full bg-white rounded-xl cursor-pointer w-full ${show? "z-20" : ""}`} title="Account"
                             onClick={handleClickIcon}
                         >
                             <div className="flex justify-center items-center">
-                                <img src={`${process.env.REACT_APP_BACKEND_URL}/profile/${authContext?.IUser.username}`} alt={"user"} loading={"eager"}/>
+                                <img src={img} alt={""} loading={"eager"}/>
                             </div>
                         </div>
                         <div className="z-10 absolute" onMouseLeave={() => setShow(false)}>
