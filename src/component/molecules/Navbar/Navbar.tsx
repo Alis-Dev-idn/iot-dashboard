@@ -5,12 +5,10 @@ import {useContext, useEffect, useState} from "react";
 import {AuthContext, SidebarContext, UiContext} from "../../../context";
 import {sleep} from "../../../utils/Utils";
 import {useNavigate} from "react-router-dom";
-import UserServices from "../../../services/UserServices/UserServices";
 import {LineWave} from "react-loader-spinner";
 
 const Navbar = () => {
     const [show, setShow] = useState(false);
-    const [img, setImg] = useState("");
     const sidebarContext = useContext(SidebarContext);
     const uiContext = useContext(UiContext);
     const authContext = useContext(AuthContext);
@@ -46,15 +44,6 @@ const Navbar = () => {
         navigate("/login");
     }
 
-    const handleData = async () => {
-        const data = await UserServices.GetProfile("ali");
-        setImg(data);
-    }
-
-    useEffect(() => {
-        handleData();
-    }, []);
-
     return(
         <div className="w-full bg-blue-2 h-[50px] rounded-xl px-3 py-1">
             <div className="flex flex-row items-center h-full">
@@ -68,7 +57,7 @@ const Navbar = () => {
                             onClick={handleClickIcon}
                         >
                             <div className="flex justify-center items-center">
-                                {img === ""?
+                                {authContext?.IUser.image === ""?
                                     <div className="ml-2.5 -mt-1">
                                         <LineWave
                                             width={25}
@@ -77,7 +66,7 @@ const Navbar = () => {
                                         />
                                     </div>
                                     :
-                                    <img src={img} alt={""} loading={"eager"}/>
+                                    <img src={authContext?.IUser.image} alt={""} loading={"eager"}/>
                                 }
                             </div>
                         </div>

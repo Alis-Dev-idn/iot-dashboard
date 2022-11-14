@@ -6,6 +6,7 @@ export interface IUser {
     role: string,
     token: string
     isLogin: boolean;
+    image?: string;
 }
 
 export const sleep = async (duration: number) => {

@@ -4,14 +4,12 @@ import {AuthContext, FormulirContext, UiContext} from "../../../context";
 import {sleep} from "../../../utils/Utils";
 import FormulirChangePassword from "./component/FormulirChangePassword";
 import FormulirChangeImage from "./component/FormulirChangeImage";
-import UserServices from "../../../services/UserServices/UserServices";
 import {LineWave} from "react-loader-spinner";
 
 const ProfileUser = () => {
     const authContext = useContext(AuthContext);
     const uiContext = useContext(UiContext);
     const formulirContext = useContext(FormulirContext);
-    const [img, setImg] = useState("");
 
     const [data, setData] = useState({
         name: "",
@@ -82,16 +80,6 @@ const ProfileUser = () => {
         })
     }, [authContext?.IUser]);
 
-    const handleData = async () => {
-        const data = await UserServices.GetProfile("ali");
-        setImg(data);
-    }
-
-    useEffect(() => {
-        
-        handleData();
-    }, []);
-
 
     return(
         <div>
@@ -100,7 +88,7 @@ const ProfileUser = () => {
                     <div className="flex flex-col items-center justify-center h-full">
                         <div className="flex items-center justify-center bg-white h-[150px] w-[150px] rounded-full overflow-hidden">
                           {/*take image*/}
-                            {img === ""?
+                            {authContext?.IUser.image === ""?
                                 <div className="ml-14 -mt-10">
                                     <LineWave
                                         width={150}
@@ -109,7 +97,7 @@ const ProfileUser = () => {
                                     />
                                 </div>
                                 :
-                                <img src={img} alt={""} loading={"eager"}/>
+                                <img src={authContext?.IUser.image} alt={""} loading={"eager"}/>
                             }
                         </div>
 
