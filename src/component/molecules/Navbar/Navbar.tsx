@@ -6,6 +6,7 @@ import {AuthContext, SidebarContext, UiContext} from "../../../context";
 import {sleep} from "../../../utils/Utils";
 import {useNavigate} from "react-router-dom";
 import UserServices from "../../../services/UserServices/UserServices";
+import {LineWave} from "react-loader-spinner";
 
 const Navbar = () => {
     const [show, setShow] = useState(false);
@@ -51,7 +52,7 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-        handleData().then();
+        handleData();
     }, []);
 
     return(
@@ -63,11 +64,21 @@ const Navbar = () => {
                 <div className="w-full">
                     <div className="flex flex-row justify-end h-full w-full">
                         <div
-                            className={`w-[25px] overflow-hidden h-full bg-white rounded-xl cursor-pointer w-full ${show? "z-20" : ""}`} title="Account"
+                            className={`w-[25px] h-[25px] overflow-hidden h-full bg-white rounded-xl cursor-pointer w-full ${show? "z-20" : ""}`} title="Account"
                             onClick={handleClickIcon}
                         >
                             <div className="flex justify-center items-center">
-                                <img src={img} alt={""} loading={"eager"}/>
+                                {img === ""?
+                                    <div className="ml-2.5 -mt-1">
+                                        <LineWave
+                                            width={25}
+                                            height={25}
+                                            color={"blue"}
+                                        />
+                                    </div>
+                                    :
+                                    <img src={img} alt={""} loading={"eager"}/>
+                                }
                             </div>
                         </div>
                         <div className="z-10 absolute" onMouseLeave={() => setShow(false)}>

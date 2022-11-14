@@ -5,6 +5,7 @@ import {sleep} from "../../../utils/Utils";
 import FormulirChangePassword from "./component/FormulirChangePassword";
 import FormulirChangeImage from "./component/FormulirChangeImage";
 import UserServices from "../../../services/UserServices/UserServices";
+import {LineWave} from "react-loader-spinner";
 
 const ProfileUser = () => {
     const authContext = useContext(AuthContext);
@@ -87,18 +88,31 @@ const ProfileUser = () => {
     }
 
     useEffect(() => {
-        handleData().then();
+        
+        handleData();
     }, []);
+
 
     return(
         <div>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-7">
                 <div className="sm:w-[250px] w-full h-[300px] bg-blue-2 rounded-xl px-3 py-3">
                     <div className="flex flex-col items-center justify-center h-full">
-                        <div className="bg-white h-[150px] w-[150px] rounded-full overflow-hidden">
-                        {/*  take image  */}
-                            <img src={img} alt={""} loading={"eager"}/>
+                        <div className="flex items-center justify-center bg-white h-[150px] w-[150px] rounded-full overflow-hidden">
+                          {/*take image*/}
+                            {img === ""?
+                                <div className="ml-14 -mt-10">
+                                    <LineWave
+                                        width={150}
+                                        height={150}
+                                        color={"blue"}
+                                    />
+                                </div>
+                                :
+                                <img src={img} alt={""} loading={"eager"}/>
+                            }
                         </div>
+
                         <div>
                             <Button
                                 className="text-sm"

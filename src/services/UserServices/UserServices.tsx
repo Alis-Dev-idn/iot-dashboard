@@ -26,7 +26,7 @@ class UserServices {
     }
 
     public static async GetProfile(username: string): Promise<any> {
-        let profile = await AxiosReqData("json", "blob", `/profile/${username}`) as string;
+        let profile = await AxiosReqData("json", "blob", `/profile/${username}`) as any;
         return URL.createObjectURL(new Blob([profile]));
     }
 }
