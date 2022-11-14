@@ -1,7 +1,7 @@
 import {ReactComponent as Menu} from "../../../assets/icon/dot-menu.svg";
 import {ReactComponent as Profile} from "../../../assets/icon/user-solid.svg";
 import {ReactComponent as Logout} from "../../../assets/icon/logout.svg";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import {AuthContext, SidebarContext, UiContext} from "../../../context";
 import {sleep} from "../../../utils/Utils";
 import {useNavigate} from "react-router-dom";
