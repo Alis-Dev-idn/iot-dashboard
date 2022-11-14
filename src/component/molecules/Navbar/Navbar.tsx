@@ -56,7 +56,7 @@ const Navbar = () => {
                             onClick={handleClickIcon}
                         >
                             <div className="flex justify-center items-center">
-                                <p className="">{authContext?.IUser.username.split("")[0].toUpperCase()}</p>
+                                <img src={`${process.env.REACT_APP_BACKEND_URL}/profile/${authContext?.IUser.username}`} alt={"user"} loading={"eager"}/>
                             </div>
                         </div>
                         <div className="z-10 absolute" onMouseLeave={() => setShow(false)}>

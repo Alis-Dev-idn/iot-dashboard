@@ -84,8 +84,9 @@ const ProfileUser = () => {
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-7">
                 <div className="sm:w-[250px] w-full h-[300px] bg-blue-2 rounded-xl px-3 py-3">
                     <div className="flex flex-col items-center justify-center h-full">
-                        <div className="bg-white h-[150px] w-[150px] rounded-full">
+                        <div className="bg-white h-[150px] w-[150px] rounded-full overflow-hidden">
                         {/*  take image  */}
+                            <img src={`${process.env.REACT_APP_BACKEND_URL}/profile/${authContext?.IUser.username}`} alt={"user"} loading={"eager"}/>
                         </div>
                         <div>
                             <Button
