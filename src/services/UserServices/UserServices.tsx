@@ -31,7 +31,6 @@ class UserServices {
     }
 
     public static async UploadImg(body: {username: string, file?: File}): Promise<any> {
-        console.log(body);
         return await AxiosPutData("from-data", "json", `profile/${body.username}`, body);
     }
 }

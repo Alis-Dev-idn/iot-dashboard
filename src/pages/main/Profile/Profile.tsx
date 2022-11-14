@@ -81,7 +81,6 @@ const ProfileUser = () => {
         })
     }, [authContext?.IUser]);
 
-
     return(
         <div>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-7">
@@ -90,6 +89,8 @@ const ProfileUser = () => {
                         <div className="flex items-center justify-center bg-white h-[150px] w-[150px] rounded-full overflow-hidden">
                           {/*take image*/}
                             {authContext?.IUser.image?
+                                <img src={authContext?.IUser.image} alt={""} loading={"eager"}/>
+                                :
                                 <div className="ml-14 -mt-10">
                                     <LineWave
                                         width={150}
@@ -97,8 +98,6 @@ const ProfileUser = () => {
                                         color={"blue"}
                                     />
                                 </div>
-                                :
-                                <img src={authContext?.IUser.image} alt={""} loading={"eager"}/>
                             }
                         </div>
 

@@ -58,6 +58,8 @@ const Navbar = () => {
                         >
                             <div className="flex justify-center items-center">
                                 {authContext?.IUser.image?
+                                    <img src={authContext?.IUser.image} alt={""} loading={"eager"}/>
+                                    :
                                     <div className="ml-2.5 -mt-1">
                                         <LineWave
                                             width={25}
@@ -65,8 +67,6 @@ const Navbar = () => {
                                             color={"blue"}
                                         />
                                     </div>
-                                    :
-                                    <img src={authContext?.IUser.image} alt={""} loading={"eager"}/>
                                 }
                             </div>
                         </div>
