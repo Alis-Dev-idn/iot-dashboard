@@ -37,6 +37,7 @@ export const AuthContextProvider = (props: PropTypes) => {
     }
 
     const SetImageProfile = async (username?: string) => {
+        setUser((prev) => ({...prev, image: undefined}));
         const data = await UserServices.GetProfile(username || "");
         setUser((prev) => ({...prev, image: data}));
     }

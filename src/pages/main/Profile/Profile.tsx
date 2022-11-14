@@ -70,7 +70,7 @@ const ProfileUser = () => {
             label: "",
             children: <></>
         });
-        authContext?.SetImageProfile();
+        authContext?.SetImageProfile(authContext?.IUser.username);
     }
 
     useEffect(() => {
