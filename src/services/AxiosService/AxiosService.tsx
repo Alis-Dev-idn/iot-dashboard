@@ -42,8 +42,8 @@ export const AxiosServices = (props: PropTypes) => {
         baseURL: process.env.REACT_APP_BACKEND_URL,
         headers: {
             Authorization: `token ${token}`,
-            "Content-Type": "application/json",
-            Accept: props.type === "json"? "application/json" : "multipart/form-data"
+            "Content-Type": props.type === "json"? "application/json" : "multipart/form-data",
+            Accept: "application/json"
         },
         responseType: props.respond
     });

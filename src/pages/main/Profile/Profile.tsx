@@ -59,7 +59,7 @@ const ProfileUser = () => {
             className: "",
             show: true,
             label: "Change Image Profile",
-            children: <FormulirChangeImage callback={handleCloseForm}/>
+            children: <FormulirChangeImage callback={handleCloseForm} username={authContext?.IUser.username || ""}/>
         })
     }
 
@@ -69,7 +69,8 @@ const ProfileUser = () => {
             show: false,
             label: "",
             children: <></>
-        })
+        });
+        authContext?.SetImageProfile();
     }
 
     useEffect(() => {

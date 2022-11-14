@@ -1,4 +1,4 @@
-import {AxiosPostData, AxiosReqData} from "../AxiosService"
+import {AxiosPostData, AxiosPutData, AxiosReqData} from "../AxiosService"
 import {IUserData} from "./User";
 
 class UserServices {
@@ -28,6 +28,11 @@ class UserServices {
     public static async GetProfile(username: string): Promise<any> {
         let profile = await AxiosReqData("json", "blob", `/profile/${username}`) as any;
         return URL.createObjectURL(new Blob([profile]));
+    }
+
+    public static async UploadImg(body: {username: string, file?: File}): Promise<any> {
+        console.log(body);
+        return await AxiosPutData("from-data", "json", `profile/${body.username}`, body);
     }
 }
 

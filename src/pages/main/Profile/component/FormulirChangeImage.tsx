@@ -2,8 +2,10 @@ import {Button} from "../../../../component";
 import {useContext, useState} from "react";
 import {UiContext} from "../../../../context";
 import {sleep} from "../../../../utils/Utils";
+import UserServices from "../../../../services/UserServices/UserServices";
 
 interface PropTypes {
+    username: string;
     callback: Function;
 }
 
@@ -33,15 +35,25 @@ const FormulirChangeImage = (props: PropTypes) => {
             show: false,
             message: "Simpan Perubahan?",
         });
-        uiContext?.handleLoading({show: true, isBlock: false});
-        await sleep(2000);
-        uiContext?.handleLoading({show: false, isBlock: false});
-        props.callback();
-        uiContext?.handleAlert({
-            show: true,
-            type: "warning",
-            message: "Ops Something Wrong, Please Try Again Later"
-        });
+        try{
+            uiContext?.handleLoading({show: true, isBlock: false});
+            await UserServices.UploadImg({username: props.username, file})
+            uiContext?.handleLoading({show: false, isBlock: false});
+            props.callback();
+            uiContext?.handleAlert({
+                show: true,
+                type: "success",
+                message: "Berhasil Ubah Foto Profile"
+            });
+        }catch (err){
+            uiContext?.handleLoading({show: false, isBlock: false});
+            uiContext?.handleAlert({
+                show: true,
+                type: "warning",
+                message: (err as Error).message
+            });
+        }
+
     }
 
     const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
