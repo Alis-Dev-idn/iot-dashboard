@@ -29,14 +29,21 @@ export interface ObjectError {
 }
 
 
+
+
 export const AxiosServices = (props: PropTypes) => {
     let token: string = "";
     const secret = process.env.REACT_APP_SECRET_KEY;
-    const dataCookies = cookies.get("component");
+    let dataCookies: any = cookies.get("component");
+    // if(!dataCookies)
+    //     for (let i = 0; i < 1000; i++) {
+    //         dataCookies = cookies.get("component");
+    //     }
     if(dataCookies && secret){
         const decrypt = decryptData(dataCookies.data);
         token = decrypt.token;
     }
+
 
     return axios.create({
         baseURL: process.env.REACT_APP_BACKEND_URL,

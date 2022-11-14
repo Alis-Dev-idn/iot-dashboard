@@ -89,7 +89,7 @@ const ProfileUser = () => {
                     <div className="flex flex-col items-center justify-center h-full">
                         <div className="flex items-center justify-center bg-white h-[150px] w-[150px] rounded-full overflow-hidden">
                           {/*take image*/}
-                            {authContext?.IUser.image === ""?
+                            {authContext?.IUser.image?
                                 <div className="ml-14 -mt-10">
                                     <LineWave
                                         width={150}

@@ -1,5 +1,5 @@
 import {createContext, ReactNode, useState} from "react";
-import { IUser } from "../../utils/Utils";
+import {IUser, sleep} from "../../utils/Utils";
 import Cookies from "universal-cookie";
 import UserServices from "../../services/UserServices/UserServices";
 const cookies = new Cookies();
@@ -28,6 +28,7 @@ export const AuthContextProvider = (props: PropTypes) => {
 
     const SetIUser = async (data: IUser) => {
         setUser(data);
+        await sleep(1000);
         await SetImageProfile(data.username);
     }
 
@@ -36,7 +37,7 @@ export const AuthContextProvider = (props: PropTypes) => {
     }
 
     const SetImageProfile = async (username?: string) => {
-        const data = await UserServices.GetProfile("ali");
+        const data = await UserServices.GetProfile(username || "");
         setUser((prev) => ({...prev, image: data}));
     }
 

@@ -57,7 +57,7 @@ const Navbar = () => {
                             onClick={handleClickIcon}
                         >
                             <div className="flex justify-center items-center">
-                                {authContext?.IUser.image === ""?
+                                {authContext?.IUser.image?
                                     <div className="ml-2.5 -mt-1">
                                         <LineWave
                                             width={25}
