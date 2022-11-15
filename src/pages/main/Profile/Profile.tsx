@@ -1,10 +1,10 @@
 import {Button, TextInput} from "../../../component";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext, FormulirContext, UiContext} from "../../../context";
-import {sleep} from "../../../utils/Utils";
 import FormulirChangePassword from "./component/FormulirChangePassword";
 import FormulirChangeImage from "./component/FormulirChangeImage";
 import {LineWave} from "react-loader-spinner";
+import UserServices from "../../../services/UserServices/UserServices";
 
 const ProfileUser = () => {
     const authContext = useContext(AuthContext);
@@ -35,14 +35,22 @@ const ProfileUser = () => {
             show: false,
             message: "Save Profile?",
         });
-        uiContext?.handleLoading({show: true, isBlock: false});
-        await sleep(2000);
-        uiContext?.handleLoading({show: false, isBlock: false});
-        uiContext?.handleAlert({
-            show: true,
-            type: "warning",
-            message: "Ops Something Wrong, Please Try Again Later"
-        });
+        try{
+            uiContext?.handleLoading({show: true, isBlock: false});
+            await UserServices.UpdateData(data);
+            uiContext?.handleLoading({show: false, isBlock: false});
+            uiContext?.handleAlert({
+                show: true,
+                type: "success",
+                message: "Berhasil Menyimpan Data"
+            });
+        }catch (err){
+            uiContext?.handleAlert({
+                show: true,
+                type: "warning",
+                message: (err as Error).message
+            });
+        }
     }
 
     const handleChangePassword = () => {
@@ -75,7 +83,7 @@ const ProfileUser = () => {
 
     useEffect(() => {
         if(authContext?.IUser) setData({
-            name: "",
+            name: authContext?.IUser.name,
             username: authContext?.IUser.username,
             email: authContext?.IUser.email
         })

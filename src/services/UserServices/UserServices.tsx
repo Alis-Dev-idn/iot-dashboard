@@ -33,6 +33,10 @@ class UserServices {
     public static async UploadImg(body: {username: string, file?: File}): Promise<any> {
         return await AxiosPutData("from-data", "json", `profile/${body.username}`, body);
     }
+
+    public static async UpdateData(body: {username: string, name: string, email: string}): Promise<any> {
+        return await AxiosPutData("json", "json", this.path, body);
+    }
 }
 
 export default UserServices;

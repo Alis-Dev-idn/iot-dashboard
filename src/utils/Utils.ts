@@ -1,10 +1,11 @@
 import {encrypt, decrypt} from "n-krypta";
 
 export interface IUser {
-    username: string,
-    email: string,
-    role: string,
-    token: string
+    name: string;
+    username: string;
+    email: string;
+    role: string;
+    token: string;
     isLogin: boolean;
     image?: string;
 }
