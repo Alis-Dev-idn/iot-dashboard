@@ -1,4 +1,5 @@
 import {ReactComponent as Angles} from "../../../assets/icon/angles-right.svg";
+import {ReactComponent as Layer} from "../../../assets/icon/layer.svg";
 import {ReactComponent as Home} from "../../../assets/icon/home.svg";
 import {useState} from "react";
 import {Link} from "react-router-dom";
@@ -48,6 +49,11 @@ const Sidebar = () => {
                 <Link to={"/"} className="flex flex-row items-center space-x-2 hover:bg-sky-700 w-full py-2 px-1 rounded-xl">
                     <Home className="w-7 h-7 fill-white"/>
                     {show? <p className="text-white font-font1">Home</p> : null}
+                </Link>
+
+                <Link to={"/application"} className="flex flex-row items-center space-x-2 hover:bg-sky-700 w-full py-2 px-1 rounded-xl">
+                    <Layer className="w-7 h-7 fill-white"/>
+                    {show? <p className="text-white font-font1">Application</p> : null}
                 </Link>
             </div>
         </div>
