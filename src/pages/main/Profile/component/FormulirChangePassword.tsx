@@ -1,7 +1,6 @@
 import {Button, TextInput} from "../../../../component";
 import {useContext, useState} from "react";
 import {UiContext} from "../../../../context";
-import {sleep} from "../../../../utils/Utils";
 import UserServices from "../../../../services/UserServices/UserServices";
 
 interface PropTypes {
