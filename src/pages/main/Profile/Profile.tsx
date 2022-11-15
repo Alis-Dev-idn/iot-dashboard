@@ -5,6 +5,9 @@ import FormulirChangePassword from "./component/FormulirChangePassword";
 import FormulirChangeImage from "./component/FormulirChangeImage";
 import {LineWave} from "react-loader-spinner";
 import UserServices from "../../../services/UserServices/UserServices";
+import {generateEncrypt} from "../../../utils/Utils";
+import Cookies from "universal-cookie"
+const cookies = new Cookies();
 
 const ProfileUser = () => {
     const authContext = useContext(AuthContext);
@@ -44,6 +47,19 @@ const ProfileUser = () => {
                 type: "success",
                 message: "Berhasil Menyimpan Data"
             });
+            if(authContext?.IUser) {
+                const user_data = {
+                    name: data.name,
+                    email: data.email,
+                    username: data.username,
+                    token: authContext?.IUser.token,
+                    role: authContext?.IUser.role,
+                    isLogin: true
+                }
+                authContext?.SetIUser(user_data);
+                const encryptRespond = generateEncrypt(user_data);
+                cookies.set("component", {data: encryptRespond, isLogin: true});
+            }
         }catch (err){
             uiContext?.handleLoading({show: false, isBlock: false});
             uiContext?.handleAlert({
