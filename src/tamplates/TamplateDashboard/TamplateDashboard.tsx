@@ -54,7 +54,7 @@ const TamplateDashboard = (props: PropTypes) => {
 
             <SidebarMobile show={sidebarContext?.show || false}/>
 
-            <div className={`flex flex-row h-full md:space-x-3 py-2 px-3 ${sidebarContext?.show? "bg-white md:bg-transparent opacity-30 md:opacity-100" : ""}`}>
+            <div className={`flex flex-row h-full md:space-x-3 py-2 px-3`}>
                 <div className="hidden md:block">
                     <Sidebar/>
                 </div>
