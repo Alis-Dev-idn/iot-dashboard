@@ -97,7 +97,7 @@ const Navbar = () => {
                             </div>
                         </div>
                         <div
-                            className={`${show? "z-[4]" : "-z-50"} absolute w-full h-full`}
+                            className={`${show? "z-[4] -mt-10" : "hidden"} absolute w-full h-full`}
                             onClick={handleClickIcon}
                         >
                         </div>
