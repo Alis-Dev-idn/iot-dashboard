@@ -45,6 +45,7 @@ const ProfileUser = () => {
                 message: "Berhasil Menyimpan Data"
             });
         }catch (err){
+            uiContext?.handleLoading({show: false, isBlock: false});
             uiContext?.handleAlert({
                 show: true,
                 type: "warning",

@@ -2,6 +2,7 @@ import {Button, TextInput} from "../../../../component";
 import {useContext, useState} from "react";
 import {UiContext} from "../../../../context";
 import {sleep} from "../../../../utils/Utils";
+import UserServices from "../../../../services/UserServices/UserServices";
 
 interface PropTypes {
     callback: Function;
@@ -11,7 +12,7 @@ const FormulirChangePassword = (props: PropTypes) => {
     const uiContext = useContext(UiContext);
 
     const [data, setData] = useState({
-        last_password: "",
+        password: "",
         new_password: "",
         confirm_password: ""
     })
@@ -30,13 +31,14 @@ const FormulirChangePassword = (props: PropTypes) => {
     }
 
     const handleClickSave = () => {
-        if(!data.last_password && !data.new_password && !data.confirm_password) return createError("Password Lama, Baru dan Komfirmasi diperlukan");
-        if(!data.last_password && data.new_password && !data.confirm_password) return createError("Password Lama, Komfirmasi diperlukan");
-        if(data.last_password && !data.new_password && !data.confirm_password) return createError("Password Baru dan Komfirmasi diperlukan");
-        if(!data.last_password && !data.new_password && data.confirm_password) return createError("Password Lama, Baru diperlukan");
-        if(data.last_password && data.new_password && !data.confirm_password) return createError("Password Konfirmasi diperlukan");
-        if(data.last_password && !data.new_password && data.confirm_password) return createError("Password Baru diperlukan");
-        if(!data.last_password && data.new_password && data.confirm_password) return createError("Password Lama diperlukan");
+        if(!data.password && !data.new_password && !data.confirm_password) return createError("Password Lama, Baru dan Komfirmasi diperlukan");
+        if(!data.password && data.new_password && !data.confirm_password) return createError("Password Lama, Komfirmasi diperlukan");
+        if(data.password && !data.new_password && !data.confirm_password) return createError("Password Baru dan Komfirmasi diperlukan");
+        if(!data.password && !data.new_password && data.confirm_password) return createError("Password Lama, Baru diperlukan");
+        if(data.password && data.new_password && !data.confirm_password) return createError("Password Konfirmasi diperlukan");
+        if(data.password && !data.new_password && data.confirm_password) return createError("Password Baru diperlukan");
+        if(!data.password && data.new_password && data.confirm_password) return createError("Password Lama diperlukan");
+        if(data.password === data.new_password) return createError("Password Baru tidak boleh sama dengan yang lama!")
 
         uiContext?.handleConfirm({
             show: true,
@@ -50,16 +52,26 @@ const FormulirChangePassword = (props: PropTypes) => {
             show: false,
             message: "Simpan Perubahan?",
         });
-        uiContext?.handleLoading({show: true, isBlock: false});
-        await sleep(2000);
-        uiContext?.handleLoading({show: false, isBlock: false});
-        props.callback();
-        uiContext?.handleAlert({
-            show: true,
-            type: "warning",
-            message: "Ops Something Wrong, Please Try Again Later"
-        });
-        setData({last_password: "", new_password: "", confirm_password: ""});
+        try{
+            uiContext?.handleLoading({show: true, isBlock: false});
+            await UserServices.UpdatePassword(data);
+            uiContext?.handleLoading({show: false, isBlock: false});
+            props.callback();
+            uiContext?.handleAlert({
+                show: true,
+                type: "success",
+                message: "Berhasil Mengubah Password"
+            });
+            setData({password: "", new_password: "", confirm_password: ""});
+        }catch (err){
+            uiContext?.handleLoading({show: false, isBlock: false});
+            uiContext?.handleAlert({
+                show: true,
+                type: "warning",
+                message: (err as Error).message
+            });
+        }
+
     }
 
     return (
@@ -68,15 +80,15 @@ const FormulirChangePassword = (props: PropTypes) => {
                 <div className="">
                     <p className="text-gray-300 text-sm font-font1">Password Lama</p>
                     <TextInput
-                        name="last_password"
-                        value={data.last_password}
+                        name="password"
+                        value={data.password}
                         type={"password"}
                         placeholder="Password Lama"
                         onChange={OnChangeTextInput}
                     />
                 </div>
                 <div className="">
-                    <p className="text-gray-300 text-sm font-font1">Password Lama</p>
+                    <p className="text-gray-300 text-sm font-font1">Password Baru</p>
                     <TextInput
                         name="new_password"
                         value={data.new_password}
@@ -86,7 +98,7 @@ const FormulirChangePassword = (props: PropTypes) => {
                     />
                 </div>
                 <div className="">
-                    <p className="text-gray-300 text-sm font-font1">Password Lama</p>
+                    <p className="text-gray-300 text-sm font-font1">Konfirmasi Password</p>
                     <TextInput
                         name="confirm_password"
                         value={data.confirm_password}

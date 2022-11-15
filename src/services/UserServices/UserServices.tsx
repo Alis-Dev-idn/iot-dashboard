@@ -37,6 +37,10 @@ class UserServices {
     public static async UpdateData(body: {username: string, name: string, email: string}): Promise<any> {
         return await AxiosPutData("json", "json", this.path, body);
     }
+
+    public static async UpdatePassword(body: {password: string, new_password: string, confirm_password: string;}): Promise<any> {
+        return await AxiosPutData("json", "json", `${this.path}/password`, body);
+    }
 }
 
 export default UserServices;
