@@ -35,6 +35,7 @@ export const AuthContextProvider = (props: PropTypes) => {
 
     const Logout = async () => {
         await cookies.remove("component");
+        await sessionStorage.clear();
     }
 
     const SetImageProfile = async (username?: string) => {

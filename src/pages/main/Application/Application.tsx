@@ -14,7 +14,7 @@ const Application = () => {
 
     const handleCallback = (name: string) => {
         setData([]);
-        handleGetData();
+        handleGetData(true);
         formulirContext?.setIFormulir({
             label: name,
             show: false,
@@ -32,9 +32,9 @@ const Application = () => {
         });
     }
 
-    const handleGetData = async () => {
+    const handleGetData = async (update?: boolean) => {
         try{
-            const response = await ApplicationService.GetApplication();
+            const response = await ApplicationService.GetApplication(update);
             setData(response.data);
         }catch (err){
 
