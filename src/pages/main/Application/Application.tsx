@@ -1,17 +1,16 @@
 import {Button} from "../../../component";
-import {useContext, useEffect, useState} from "react";
+import {Suspense, lazy, useContext, useEffect, useState} from "react";
 import {FormulirContext} from "../../../context";
-import FormulirAdd from "./formulir/FormulirAdd";
 import {ReactComponent as App} from "../../../assets/icon/clone.svg";
 import ApplicationService from "../../../services/ApplicationService/ApplicationService";
 import {Link} from "react-router-dom";
 import {Grid} from "react-loader-spinner";
 
+const FormulirAdd = lazy(() => import("./formulir/FormulirAdd"));
 
 const Application = () => {
     const formulirContext = useContext(FormulirContext);
     const [data, setData] = useState<string[]>([]);
-
 
     const handleCallback = (name: string) => {
         setData([]);
@@ -27,7 +26,9 @@ const Application = () => {
         formulirContext?.setIFormulir({
             label: "Add Application",
             show: true,
-            children: <FormulirAdd callback={() => handleCallback("Add Application")}/>
+            children: <Suspense fallback={<div>Loading...</div>}>
+                <FormulirAdd callback={() => handleCallback("Add Application")}/>
+            </Suspense>
         });
     }
 

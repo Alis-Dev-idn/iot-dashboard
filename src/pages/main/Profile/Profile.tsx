@@ -1,13 +1,15 @@
+import {Suspense, lazy} from "react";
 import {Button, TextInput} from "../../../component";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext, FormulirContext, UiContext} from "../../../context";
-import FormulirChangePassword from "./component/FormulirChangePassword";
-import FormulirChangeImage from "./component/FormulirChangeImage";
 import {LineWave} from "react-loader-spinner";
 import UserServices from "../../../services/UserServices/UserServices";
 import {generateEncrypt} from "../../../utils/Utils";
 import Cookies from "universal-cookie"
 const cookies = new Cookies();
+
+const FormulirChangeImage = lazy(() => import("./component/FormulirChangeImage"));
+const FormulirChangePassword = lazy(() => import("./component/FormulirChangePassword"));
 
 const ProfileUser = () => {
     const authContext = useContext(AuthContext);
@@ -75,7 +77,9 @@ const ProfileUser = () => {
             className: "",
             show: true,
             label: "Change Password",
-            children: <FormulirChangePassword callback={handleCloseForm}/>
+            children: <Suspense fallback={<div>Loading ...</div>}>
+                <FormulirChangePassword callback={handleCloseForm}/>
+            </Suspense>
         })
     }
 
@@ -84,7 +88,9 @@ const ProfileUser = () => {
             className: "",
             show: true,
             label: "Change Image Profile",
-            children: <FormulirChangeImage callback={handleCloseForm} username={authContext?.IUser.username || ""}/>
+            children: <Suspense fallback={<div>Loading ...</div>}>
+                <FormulirChangeImage callback={handleCloseForm} username={authContext?.IUser.username || ""}/>
+            </Suspense>
         })
     }
 
