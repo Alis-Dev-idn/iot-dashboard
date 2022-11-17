@@ -1,23 +1,34 @@
 import {ReactComponent as Angles} from "../../../assets/icon/angles-right.svg";
 import {ReactComponent as Layer} from "../../../assets/icon/layer.svg";
 import {ReactComponent as Home} from "../../../assets/icon/home.svg";
-import {useState} from "react";
-import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {Link, useLocation} from "react-router-dom";
 
 const Sidebar = () => {
+    const locate = useLocation();
     const [show, setShow] = useState(false);
     const [stay, setStay] = useState(false);
+    const [active, setActive] = useState("");
 
     const handleMouseEnter = () => {
         if(stay) return;
         setShow(true);
     }
-
     const handleMouseLeave = () => {
         if(stay) return;
         setShow(false);
     }
 
+    const getLocationPath = () => {
+        const pathName = locate.pathname.split("/");
+        setActive(pathName[1]);
+    }
+
+    useEffect(() => {
+        getLocationPath();
+
+        // eslint-disable-next-line
+    }, [locate.pathname]);
     return(
         <div
             className={`flex flex-col transition-all duration-500 overflow-hidden ${show? "w-[200px]" : "w-[50px]"} h-full bg-blue-2 px-2 py-2 rounded-xl`}
@@ -46,12 +57,12 @@ const Sidebar = () => {
 
             <div className="flex flex-col items-center h-full w-full">
                 {/*Element Link*/}
-                <Link to={"/"} className="flex flex-row items-center space-x-2 hover:bg-sky-700 w-full py-2 px-1 rounded-xl">
+                <Link to={"/"} className={`flex flex-row items-center space-x-2 w-full py-2 px-1 rounded-xl ${active === ""? "bg-sky-700" : null}`}>
                     <Home className="w-7 h-7 fill-white"/>
                     {show? <p className="text-white font-font1">Home</p> : null}
                 </Link>
 
-                <Link to={"/application"} className="flex flex-row items-center space-x-2 hover:bg-sky-700 w-full py-2 px-1 rounded-xl">
+                <Link to={"/application"} className={`flex flex-row items-center space-x-2 w-full py-2 px-1 rounded-xl ${active === "application"? "bg-sky-700" : null}`}>
                     <Layer className="w-7 h-7 fill-white"/>
                     {show? <p className="text-white font-font1">Application</p> : null}
                 </Link>

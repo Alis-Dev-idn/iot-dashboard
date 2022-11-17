@@ -1,9 +1,9 @@
 import {ReactComponent as Close} from "../../../assets/icon/x-mark.svg";
 import {ReactComponent as Home} from "../../../assets/icon/home.svg";
 import {ReactComponent as Layer} from "../../../assets/icon/layer.svg";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {SidebarContext} from "../../../context";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 
 interface PropTypes {
@@ -11,7 +11,20 @@ interface PropTypes {
 }
 
 const SidebarMobile = (props: PropTypes) => {
+    const locate = useLocation();
     const sidebarContext = useContext(SidebarContext);
+    const [active, setActive] = useState("");
+
+    const getLocationPath = () => {
+        const pathName = locate.pathname.split("/");
+        setActive(pathName[1]);
+    }
+
+    useEffect(() => {
+        getLocationPath();
+
+        // eslint-disable-next-line
+    }, [locate.pathname]);
 
     return(
         <>
@@ -40,7 +53,7 @@ const SidebarMobile = (props: PropTypes) => {
                         <Link
                             onClick={() => sidebarContext?.showSidebar(false)}
                             to={"/"}
-                            className="flex flex-row items-center space-x-2 hover:bg-sky-700 w-full py-2 px-1 rounded-xl"
+                            className={`flex flex-row items-center space-x-2 w-full py-2 px-1 rounded-xl ${active === ""? "bg-sky-700" : null}`}
                         >
                             <Home className="w-7 h-7 fill-white"/>
                             <p className="text-white font-font1">Home</p>
@@ -49,7 +62,7 @@ const SidebarMobile = (props: PropTypes) => {
                         <Link
                             onClick={() => sidebarContext?.showSidebar(false)}
                             to={"/application"}
-                            className="flex flex-row items-center space-x-2 hover:bg-sky-700 w-full py-2 px-1 rounded-xl"
+                            className={`flex flex-row items-center space-x-2 w-full py-2 px-1 rounded-xl ${active === "application"? "bg-sky-700" : null}`}
                         >
                             <Layer className="w-7 h-7 fill-white"/>
                             <p className="text-white font-font1">Application</p>
