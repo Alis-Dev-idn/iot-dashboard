@@ -32,6 +32,11 @@ const FormulirAdd = (props: PropType) => {
             setLoading(true);
             await ApplicationService.AddApplication(data);
             setLoading(false);
+            uiContext?.handleAlert({
+                type: "success",
+                show: true,
+                message: `Success Create Application ${data.application}`
+            });
             props.callback();
         }catch (error){
             setLoading(false);
