@@ -10,6 +10,7 @@ import Confirm from "./molecules/Confirm/Confirm";
 import ScrollBars from "./atoms/ScrollBars/ScrollBars";
 import BoxFormulir from "./molecules/BoxFormulir/BoxFormulir";
 import LoaderSection from "./molecules/LoaderSection/LoaderSection";
+import LoaderContent from "./molecules/LoaderContent/LoaderContent";
 
 export {
     Alert,
@@ -23,5 +24,6 @@ export {
     InputSelect,
     ScrollBars,
     BoxFormulir,
-    LoaderSection
+    LoaderSection,
+    LoaderContent
 }
