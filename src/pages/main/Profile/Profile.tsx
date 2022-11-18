@@ -1,5 +1,5 @@
 import {Suspense, lazy} from "react";
-import {Button, TextInput} from "../../../component";
+import {Button, LoaderSection, TextInput} from "../../../component";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext, FormulirContext, UiContext} from "../../../context";
 import {LineWave} from "react-loader-spinner";
@@ -77,7 +77,7 @@ const ProfileUser = () => {
             className: "",
             show: true,
             label: "Change Password",
-            children: <Suspense fallback={<div>Loading ...</div>}>
+            children: <Suspense fallback={<LoaderSection/>}>
                 <FormulirChangePassword callback={handleCloseForm}/>
             </Suspense>
         })
@@ -88,7 +88,7 @@ const ProfileUser = () => {
             className: "",
             show: true,
             label: "Change Image Profile",
-            children: <Suspense fallback={<div>Loading ...</div>}>
+            children: <Suspense fallback={<LoaderSection/>}>
                 <FormulirChangeImage callback={handleCloseForm} username={authContext?.IUser.username || ""}/>
             </Suspense>
         })

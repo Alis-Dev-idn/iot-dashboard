@@ -9,7 +9,7 @@ import SidebarMobile from "./molecules/SidebarMobile/SidebarMobile";
 import Confirm from "./molecules/Confirm/Confirm";
 import ScrollBars from "./atoms/ScrollBars/ScrollBars";
 import BoxFormulir from "./molecules/BoxFormulir/BoxFormulir";
-
+import LoaderSection from "./molecules/LoaderSection/LoaderSection";
 
 export {
     Alert,
@@ -22,5 +22,6 @@ export {
     TextInput,
     InputSelect,
     ScrollBars,
-    BoxFormulir
+    BoxFormulir,
+    LoaderSection
 }

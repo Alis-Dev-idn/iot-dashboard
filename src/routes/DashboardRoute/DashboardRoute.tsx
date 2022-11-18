@@ -2,6 +2,7 @@ import {Suspense, lazy} from "react";
 import {Routes, Route} from "react-router-dom"
 import {Application, Dashboard, Device, ProfileUser} from "../../pages/main";
 import TamplateDashboard from "../../tamplates/TamplateDashboard/TamplateDashboard";
+import {LoaderSection} from "../../component";
 
 const NotFound = lazy(() => import("../../pages/404/NotFound"));
 
@@ -10,14 +11,35 @@ const DashboardRoute = () => {
         <TamplateDashboard>
             <Routes>
                 <Route path="*" element={
-                    <Suspense fallback={<div>Loading ...</div>}>
+                    <Suspense fallback={<LoaderSection/>}>
                         <NotFound/>
                     </Suspense>
                 }/>
-                <Route path="/" element={<Dashboard/>}/>
-                <Route path="/profile" element={<ProfileUser/>}/>
-                <Route path="/application" element={<Application/>}/>
-                <Route path="/application/device/*" element={<Device/>}/>
+
+                <Route path="/" element={
+                    <Suspense fallback={<LoaderSection/>}>
+                        <Dashboard/>
+                    </Suspense>
+                }/>
+
+                <Route path="/profile" element={
+                    <Suspense fallback={<LoaderSection/>}>
+                        <ProfileUser/>
+                    </Suspense>
+                }/>
+
+                <Route path="/application" element={
+                    <Suspense fallback={<LoaderSection/>}>
+                        <Application/>
+                    </Suspense>
+                }/>
+
+                <Route path="/application/*" element={
+                    <Suspense fallback={<LoaderSection/>}>
+                        <Device/>
+                    </Suspense>
+                }/>
+
             </Routes>
         </TamplateDashboard>
     )
