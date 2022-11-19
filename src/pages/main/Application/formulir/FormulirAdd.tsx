@@ -1,4 +1,4 @@
-import {Button, TextInput} from "../../../../component";
+import {Button, TextInput, Toastify} from "../../../../component";
 import {useContext, useState} from "react";
 import {UiContext} from "../../../../context";
 import ApplicationService from "../../../../services/ApplicationService/ApplicationService";
@@ -32,19 +32,11 @@ const FormulirAdd = (props: PropType) => {
             setLoading(true);
             await ApplicationService.AddApplication(data);
             setLoading(false);
-            uiContext?.handleAlert({
-                type: "success",
-                show: true,
-                message: `Success Create Application ${data.application}`
-            });
+            Toastify({type: "success", message: `Success Create Application ${data.application}`});
             props.callback();
         }catch (error){
             setLoading(false);
-            uiContext?.handleAlert({
-                type: "warning",
-                show: true,
-                message: (error as Error).message
-            });
+            Toastify({type: "error", message: (error as Error).message});
         }
     }
 

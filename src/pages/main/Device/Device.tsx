@@ -1,11 +1,15 @@
-import {useLocation} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {Button, LoaderContent, ScrollBars} from "../../../component";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
+import {Button, LoaderContent, ScrollBars, Toastify} from "../../../component";
 import {ReactComponent as DeviceIcon} from "../../../assets/icon/device-mobile.svg";
 import DeviceService from "../../../services/DeviceService/DeviceService";
+import ApplicationService from "../../../services/ApplicationService/ApplicationService";
+import {UiContext} from "../../../context";
 
 const Device = () => {
     const locate = useLocation();
+    const navigate = useNavigate();
+    const uiContext = useContext(UiContext);
     const [loading, setLoading] = useState(false);
     const [loadData, setLoadData] = useState(false);
     const [name, setName] = useState("");
@@ -28,7 +32,32 @@ const Device = () => {
             setLoading(false);
             setLoadData(false);
         }
+    }
 
+    const handleDeleteApp = async () => {
+        uiContext?.handleConfirm({
+            show: true,
+            message: "Delete Application?",
+            callback: ConfirmDelete
+        });
+    }
+
+    const ConfirmDelete = async () => {
+        uiContext?.handleConfirm({
+            show: false,
+            message: "Delete Application?",
+        });
+        try{
+            uiContext?.handleLoading({show: true, isBlock: false});
+            await ApplicationService.DeleteApplication(name);
+            await ApplicationService.GetApplication(true)
+            uiContext?.handleLoading({show: false, isBlock: false});
+            Toastify({type: "success", message: "Delete App Success"});
+            navigate("/application");
+        }catch (error){
+            uiContext?.handleLoading({show: false, isBlock: false});
+            Toastify({type: "error", message: (error as Error).message});
+        }
     }
 
     useEffect(() => {
@@ -47,13 +76,13 @@ const Device = () => {
                             className="py-1 mt-0 text-sm flex justify-center w-full"
                             label="Add Device"
                             name="device"
-                            onClick={() => {}}
+                            onClick={() => Toastify({type: "warning", message: "Under Development"})}
                         />
                         <Button
                             className="py-1 mt-0 text-sm flex justify-center w-full bg-red-700 hover:bg-red-500"
                             label="Delete App"
                             name="delete"
-                            onClick={() => {}}
+                            onClick={handleDeleteApp}
                         />
                     </div>
                     <div className="flex flex-col bg-blue-2 h-full rounded-md h-[200px] md:h-[400px] space-y-2">

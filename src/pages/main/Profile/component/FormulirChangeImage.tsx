@@ -1,4 +1,4 @@
-import {Button} from "../../../../component";
+import {Button, Toastify} from "../../../../component";
 import {useContext, useState} from "react";
 import {UiContext} from "../../../../context";
 import UserServices from "../../../../services/UserServices/UserServices";
@@ -39,18 +39,10 @@ const FormulirChangeImage = (props: PropTypes) => {
             await UserServices.UploadImg({username: props.username, file})
             uiContext?.handleLoading({show: false, isBlock: false});
             props.callback();
-            uiContext?.handleAlert({
-                show: true,
-                type: "success",
-                message: "Berhasil Ubah Foto Profile"
-            });
+            Toastify({type: "success", message: "Berhasil Ubah Foto Profile"});
         }catch (err){
             uiContext?.handleLoading({show: false, isBlock: false});
-            uiContext?.handleAlert({
-                show: true,
-                type: "warning",
-                message: (err as Error).message
-            });
+            Toastify({type: "error", message: (err as Error).message});
         }
 
     }

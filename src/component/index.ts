@@ -11,6 +11,7 @@ import ScrollBars from "./atoms/ScrollBars/ScrollBars";
 import BoxFormulir from "./molecules/BoxFormulir/BoxFormulir";
 import LoaderSection from "./molecules/LoaderSection/LoaderSection";
 import LoaderContent from "./molecules/LoaderContent/LoaderContent";
+import Toastify from "./atoms/Toastify/Toastify";
 
 export {
     Alert,
@@ -25,5 +26,6 @@ export {
     ScrollBars,
     BoxFormulir,
     LoaderSection,
-    LoaderContent
+    LoaderContent,
+    Toastify
 }

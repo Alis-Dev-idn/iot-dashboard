@@ -1,4 +1,4 @@
-import {AxiosPostData, AxiosReqData} from "../AxiosService";
+import {AxiosDeleteData, AxiosPostData, AxiosReqData} from "../AxiosService";
 import {IApplication} from "./Application";
 
 
@@ -22,6 +22,10 @@ class ApplicationService {
 
     public static async AddApplication(body: {application: string}): Promise<any> {
         return await AxiosPostData("json", "json", this.path, body);
+    }
+
+    public static async DeleteApplication(application: string): Promise<any> {
+        return await AxiosDeleteData("json", "json", `${this.path}?application=${application}`);
     }
 }
 

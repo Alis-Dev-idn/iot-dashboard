@@ -1,5 +1,5 @@
 import {Suspense, lazy} from "react";
-import {Button, LoaderSection, TextInput} from "../../../component";
+import {Button, LoaderSection, TextInput, Toastify} from "../../../component";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext, FormulirContext, UiContext} from "../../../context";
 import {LineWave} from "react-loader-spinner";
@@ -44,11 +44,7 @@ const ProfileUser = () => {
             uiContext?.handleLoading({show: true, isBlock: false});
             await UserServices.UpdateData(data);
             uiContext?.handleLoading({show: false, isBlock: false});
-            uiContext?.handleAlert({
-                show: true,
-                type: "success",
-                message: "Berhasil Menyimpan Data"
-            });
+            Toastify({type: "success", message: "Berhasil Menyimpan Profile"});
             if(authContext?.IUser) {
                 const user_data = {
                     name: data.name,
@@ -64,11 +60,7 @@ const ProfileUser = () => {
             }
         }catch (err){
             uiContext?.handleLoading({show: false, isBlock: false});
-            uiContext?.handleAlert({
-                show: true,
-                type: "warning",
-                message: (err as Error).message
-            });
+            Toastify({type: "error", message: (err as Error).message});
         }
     }
 

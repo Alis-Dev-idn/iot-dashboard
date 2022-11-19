@@ -1,4 +1,4 @@
-import {Button, TextInput} from "../../../../component";
+import {Button, TextInput, Toastify} from "../../../../component";
 import {useContext, useState} from "react";
 import {UiContext} from "../../../../context";
 import UserServices from "../../../../services/UserServices/UserServices";
@@ -56,19 +56,11 @@ const FormulirChangePassword = (props: PropTypes) => {
             await UserServices.UpdatePassword(data);
             uiContext?.handleLoading({show: false, isBlock: false});
             props.callback();
-            uiContext?.handleAlert({
-                show: true,
-                type: "success",
-                message: "Berhasil Mengubah Password"
-            });
+            Toastify({type: "success", message: "Berhasil Mengubah Password"});
             setData({password: "", new_password: "", confirm_password: ""});
         }catch (err){
             uiContext?.handleLoading({show: false, isBlock: false});
-            uiContext?.handleAlert({
-                show: true,
-                type: "warning",
-                message: (err as Error).message
-            });
+            Toastify({type: "error", message: (err as Error).message});
         }
 
     }
