@@ -1,5 +1,5 @@
 import {useLocation, useNavigate} from "react-router-dom";
-import {useContext, useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Button, LoaderContent, ScrollBars, Toastify} from "../../../component";
 import {ReactComponent as DeviceIcon} from "../../../assets/icon/device-mobile.svg";
 import {ReactComponent as Trash} from "../../../assets/icon/trash.svg";
