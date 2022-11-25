@@ -53,7 +53,8 @@ const Device = () => {
         try{
             uiContext?.handleLoading({show: true, isBlock: false});
             await ApplicationService.DeleteApplication(name);
-            await ApplicationService.GetApplication(true)
+            await ApplicationService.GetApplication(true);
+            await DeviceService.getCountDevice(true);
             uiContext?.handleLoading({show: false, isBlock: false});
             Toastify({type: "success", message: "Delete App Success"});
             navigate("/application");
