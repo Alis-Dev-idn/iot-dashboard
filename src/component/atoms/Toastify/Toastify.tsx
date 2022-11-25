@@ -7,7 +7,6 @@ interface Proptypes {
 }
 
 const Toastify = (props: Proptypes) => {
-    console.log(props);
        if(props.type === "warning"){
            toast.warning(props.message, {
                position: "top-right",

@@ -1,4 +1,4 @@
-import {AxiosReqData} from "../AxiosService";
+import {AxiosDeleteData, AxiosPostData, AxiosReqData} from "../AxiosService";
 
 class DeviceService {
     static path = "/device";
@@ -16,6 +16,14 @@ class DeviceService {
 
     public static async getListDevice(application: string): Promise<{data: string[]}> {
         return await AxiosReqData("json", "json", `${this.path}/list?application=${application}`) as {data: string[]};
+    }
+
+    public static async addNewDevice(body: {application: string, name: string}): Promise<any> {
+        return await AxiosPostData("json", "json", `/app${this.path}`, body);
+    }
+
+    public static async deleteDevice(query: {application: string, device: string}): Promise<any> {
+        return await AxiosDeleteData("json", "json", `/app${this.path}?application=${query.application}&name=${query.device}`);
     }
 }
 
