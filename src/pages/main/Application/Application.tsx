@@ -1,4 +1,4 @@
-import {Button} from "../../../component";
+import {Button, Toastify} from "../../../component";
 import {Suspense, lazy, useContext, useEffect, useState} from "react";
 import {FormulirContext} from "../../../context";
 import {ReactComponent as App} from "../../../assets/icon/clone.svg";
@@ -9,6 +9,7 @@ import {Grid} from "react-loader-spinner";
 const FormulirAdd = lazy(() => import("./formulir/FormulirAdd"));
 
 const Application = () => {
+    const [loading, setLoading] = useState(false)
     const formulirContext = useContext(FormulirContext);
     const [data, setData] = useState<string[]>([]);
 
@@ -34,10 +35,12 @@ const Application = () => {
 
     const handleGetData = async (update?: boolean) => {
         try{
+            setLoading(true);
             const response = await ApplicationService.GetApplication(update);
             setData(response.data);
+            setLoading(false);
         }catch (err){
-
+            Toastify({type: "error", message: (err as Error).message});
         }
     }
 
@@ -71,16 +74,19 @@ const Application = () => {
                     ))}
                 </div>
                 :
-                <div className="flex justify-center items-center h-[400px]">
-                    <Grid
-                        height="70"
-                        width="70"
-                        color="#a7d8de"
-                        ariaLabel="grid-loading"
-                        radius="13"
-                        visible={true}
-                    />
-                </div>
+                (loading?
+                    <div className="flex justify-center items-center h-[400px]">
+                        <Grid
+                            height="70"
+                            width="70"
+                            color="#a7d8de"
+                            ariaLabel="grid-loading"
+                            radius="13"
+                            visible={true}
+                        />
+                    </div>
+                     : null)
+
             }
         </div>
     )

@@ -1,4 +1,11 @@
 import {AxiosDeleteData, AxiosPostData, AxiosReqData} from "../AxiosService";
+import {IDataDevice} from "./Device";
+
+interface QueryData {
+    limit: number;
+    skip: number;
+    device: string;
+}
 
 class DeviceService {
     static path = "/device";
@@ -24,6 +31,15 @@ class DeviceService {
 
     public static async deleteDevice(query: {application: string, device: string}): Promise<any> {
         return await AxiosDeleteData("json", "json", `/app${this.path}?application=${query.application}&name=${query.device}`);
+    }
+
+    public static async getDataDevice(query: QueryData): Promise<IDataDevice> {
+        type QueryKey = "limit" | "skip" | "device";
+        const queryString = Object.keys(query)
+            .filter((key) => query[key as QueryKey] !== "")
+            .map((item) => `${item}=${query[item as QueryKey]}`)
+            .join("&");
+        return await AxiosReqData("json", "json", `${this.path}?${queryString}`) as IDataDevice;
     }
 }
 

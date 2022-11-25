@@ -18,6 +18,20 @@ export const sleep = async (duration: number) => {
     });
 }
 
+export const parseDateTime = (date: string) => {
+    let newDate = new Date(date);
+    let years: any = newDate.getFullYear();
+    let months: any = newDate.getMonth();
+    let dates: any = newDate.getDate();
+    let hours: any = newDate.getHours();
+    let minutes: any = newDate.getMinutes();
+    if(months < 10) months = `0${months}`;
+    if(dates < 10) months = `0${dates}`;
+    if(hours < 10) hours = `0${hours}`;
+    if(minutes < 10) minutes = `0${minutes}`;
+    return `${dates}/${months}/${years} ${hours}:${minutes}`
+}
+
 export const generateEncrypt = (data: any): string => {
     const encryptData = window.btoa(JSON.stringify(data));
     return encrypt(encryptData, `${process.env.REACT_APP_SECRET_KEY}`);

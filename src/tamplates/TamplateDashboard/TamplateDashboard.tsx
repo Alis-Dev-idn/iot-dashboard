@@ -62,7 +62,7 @@ const TamplateDashboard = (props: PropTypes) => {
                     <Navbar/>
                     <div className="text-white font-font1 ml-2 text-[14px]">Home {name}</div>
                     <div className="w-full h-full overflow-hidden">
-                        <ScrollBars>
+                        <ScrollBars type="top" update={0}>
                             <section>
                                 {props.children}
                             </section>
