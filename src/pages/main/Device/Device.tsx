@@ -104,6 +104,7 @@ const Device = () => {
             await GetListDevice(application);
             uiContext?.handleLoading({show: false, isBlock: false});
             Toastify({type: "success", message: "Berhasil Menghapus Aplikasi"});
+            setDataDevice([]);
         }catch (error){
             uiContext?.handleLoading({show: false, isBlock: false});
             Toastify({type: "error", message: (error as Error).message});
