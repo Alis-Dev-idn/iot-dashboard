@@ -87,6 +87,7 @@ const Device = () => {
             });
             uiContext?.handleLoading({show: true, isBlock: false});
             await DeviceService.deleteDevice({application, device});
+            await DeviceService.getCountDevice(true);
             setDevice("");
             await GetListDevice(application);
             uiContext?.handleLoading({show: false, isBlock: false});

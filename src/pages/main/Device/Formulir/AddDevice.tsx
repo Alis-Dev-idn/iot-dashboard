@@ -36,6 +36,7 @@ const AddDevice = (props: PropTypes) => {
             }
             setLoading(true);
             await DeviceService.addNewDevice({application: props.application, name: data.device});
+            await DeviceService.getCountDevice(true);
             setLoading(false);
             handleCloseForm();
             Toastify({type: "success", message: "Berhasil Menambah Aplikasi"});
