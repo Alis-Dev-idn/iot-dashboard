@@ -8,6 +8,7 @@ import ApplicationService from "../../../services/ApplicationService/Application
 import {FormulirContext, UiContext} from "../../../context";
 import AddDevice from "./Formulir/AddDevice";
 import {parseDateTime} from "../../../utils/Utils";
+import {listenBrodcast} from "../../../services/SocketIoService/SocketIoService";
 
 const QueryKey = {
     limit: 30,
@@ -26,6 +27,7 @@ const Device = () => {
     const [data, setData] = useState<string[]>([]);
     const [device, setDevice] = useState("");
     const [dataDevice, setDataDevice] = useState<{name: string, createdAt: string, data: any}[]>([]);
+    const [dataCome, setDataCome] = useState({name: "", data: {}});
     // const [query, setQuery] = useState(QueryKey);
 
     const OnClickDevice = async (name: string, idx: number) => {
@@ -119,8 +121,16 @@ const Device = () => {
         setName(locate.pathname.split("/")[2]);
     }, [locate.pathname]);
 
+    useEffect(() => {
+        listenBrodcast(`accept_${device}`).then((data: any) => {
+            setDataDevice((prev) => [...prev, data]);
+            setDataCome(data);
+            number++;
+        });
+    }, [dataCome ,device]);
+
     return(
-        <div className="px-2 text-white">
+        <div className="flex flex-col space-y-2 px-2 text-white">
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 ">
                 <div className="flex flex-col space-y-2 w-full md:w-[300px]">
                     <div className="flex flex-row space-x-2">
@@ -191,6 +201,21 @@ const Device = () => {
                         </LoaderContent>
                     </div>
                 </div>
+            </div>
+            <div className="flex flex-col space-y-2 w-full h-[190px] sm:h-[170px] rounded-md bg-blue-2 px-2 py-2">
+                <div>
+                    <p className="text-white font-font1">Socket Url : </p>
+                    <p className="text-white font-font1 text-sm">https://api.smpvanilla.com:5042/socket.io/?transport=websocket</p>
+                </div>
+                <div>
+                    <p className="text-white font-font1">Format Data : </p>
+                    <p className="text-white font-font1 text-sm">{JSON.stringify({name: "'name device'", data: "any json data"}, undefined, 5)}</p>
+                </div>
+                <div>
+                    <p className="text-white font-font1">Example : </p>
+                    <p className="text-white font-font1 text-sm cursor-pointer hover:text-blue-500" onClick={() => window.open("https://github.com/Alis-Dev-idn/iot-socket-arduino", '_blank')}>example code</p>
+                </div>
+
             </div>
         </div>
     )
