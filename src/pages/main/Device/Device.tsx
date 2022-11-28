@@ -3,6 +3,7 @@ import {useContext, useEffect, useState} from "react";
 import {Button, LoaderContent, ScrollBars, Toastify} from "../../../component";
 import {ReactComponent as DeviceIcon} from "../../../assets/icon/device-mobile.svg";
 import {ReactComponent as Trash} from "../../../assets/icon/trash.svg";
+// import {ReactComponent as Arrow} from "../../../assets/icon/arrow-down.svg";
 import DeviceService from "../../../services/DeviceService/DeviceService";
 import ApplicationService from "../../../services/ApplicationService/ApplicationService";
 import {FormulirContext, UiContext} from "../../../context";
@@ -11,7 +12,7 @@ import {parseDateTime} from "../../../utils/Utils";
 import {listenBrodcast} from "../../../services/SocketIoService/SocketIoService";
 
 const QueryKey = {
-    limit: 30,
+    limit: 10,
     skip: 0,
 }
 
@@ -21,6 +22,8 @@ const Device = () => {
     const navigate = useNavigate();
     const uiContext = useContext(UiContext);
     const formulirContext = useContext(FormulirContext);
+    // eslint-disable-next-line
+    const [show, setShow] = useState(false);
     const [loading, setLoading] = useState(false);
     const [loadContent, setLoadingContent] = useState(false);
     const [name, setName] = useState("");
@@ -150,7 +153,7 @@ const Device = () => {
                     <div className="flex flex-col bg-blue-2 h-full rounded-md h-[200px] md:h-[400px] space-y-2">
                         <p className="text-sm font-font1 px-2 py-2">List Device {name}</p>
                         <LoaderContent loading={loading}>
-                            <ScrollBars type="top" update={0}>
+                            <ScrollBars type="top" update={0} callback={() => {}}>
                                 <div className="flex flex-col space-y-2 px-2 mb-5">
                                     {data.map((item, idx) => (
                                         <div
@@ -178,12 +181,20 @@ const Device = () => {
                                     onClick={() => handleClickDeleteDevice(name, device)}
                                 />
                             }
+                            {/*<div */}
+                            {/*    className={`absolute w-10 h-10 rounded-full bg-white bg-opacity-40 mt-[450px] mr-5 z-10 cursor-pointer ${show? "" : "hidden"}`}*/}
+                            {/*    onClick={}*/}
+                            {/*>*/}
+                            {/*    <div className="flex justify-center items-center h-full">*/}
+                            {/*        <Arrow className="w-8 h-8"/>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                         </div>
                     </div>
                     <div className="h-[1px] bg-white"></div>
                     <div className="flex flex-col h-full border border-white border-opacity-50 rounded-md px-2 py-2 h-[490px] overflow-y-auto device w-full">
                         <LoaderContent loading={loadContent}>
-                            <ScrollBars type="bottom" update={number}>
+                            <ScrollBars type="bottom" update={number} id="device" callback={(e: boolean) => setShow(e)}>
                                 <div className="flex flex-col space-y-2">
                                     {dataDevice.length === 0? <div>Data Not Found</div> :
                                         (dataDevice.map((items, idx) => (
