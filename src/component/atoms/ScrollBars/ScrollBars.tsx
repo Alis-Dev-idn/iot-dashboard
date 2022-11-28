@@ -31,7 +31,7 @@ const ScrollBars = (props: Proptypes) => {
                 props.callback(true);
             }
         }
-        console.log(scrollRef.current?.getScrollTop(), lastScroll);
+        // console.log(scrollRef.current?.getScrollTop(), lastScroll);
         // eslint-disable-next-line
     }, [props.update]);
 
