@@ -126,9 +126,11 @@ const Device = () => {
 
     useEffect(() => {
         listenBrodcast(`accept_${device}`).then((data: any) => {
-            setDataDevice((prev) => [...prev, data]);
-            setDataCome(data);
-            number++;
+            if(data.name === device) {
+                setDataDevice((prev) => [...prev, data]);
+                setDataCome(data);
+                number++;
+            }
         });
     }, [dataCome ,device]);
 
