@@ -134,7 +134,10 @@ const Device = () => {
     }, [locate.pathname]);
 
     useEffect(() => {
-        if(lastDevice !== device) setDataDevice([]);
+        if(lastDevice !== device) {
+            const newData = dataDevice.filter(items => items.key === device);
+            setDataDevice(() => newData);
+        }
         listenBrodcast(device).then((data: any) => {
             lastDevice = device;
             if(data.key !== lastDevice) return;
