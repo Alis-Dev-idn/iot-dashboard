@@ -6,7 +6,7 @@ import {ReactComponent as Trash} from "../../../assets/icon/trash.svg";
 // import {ReactComponent as Arrow} from "../../../assets/icon/arrow-down.svg";
 import DeviceService from "../../../services/DeviceService/DeviceService";
 import ApplicationService from "../../../services/ApplicationService/ApplicationService";
-import {FormulirContext, UiContext} from "../../../context";
+import {AuthContext, FormulirContext, UiContext} from "../../../context";
 import AddDevice from "./Formulir/AddDevice";
 import {parseDateTime} from "../../../utils/Utils";
 import {listenBrodcast} from "../../../services/SocketIoService/SocketIoService";
@@ -21,6 +21,7 @@ const Device = () => {
     const locate = useLocation();
     const navigate = useNavigate();
     const uiContext = useContext(UiContext);
+    const authContext = useContext(AuthContext);
     const formulirContext = useContext(FormulirContext);
     // eslint-disable-next-line
     const [show, setShow] = useState(false);
@@ -34,12 +35,17 @@ const Device = () => {
     // const [query, setQuery] = useState(QueryKey);
 
     const OnClickDevice = async (name: string, idx: number) => {
-        setLoadingContent(true);
-        setDevice(name);
-        const {data} = await DeviceService.getDataDevice({...QueryKey, device: name});
-        setDataDevice(data.reverse());
-        setLoadingContent(false);
-        number++;
+        try{
+            setLoadingContent(true);
+            setDevice(name);
+            const {data} = await DeviceService.getDataDevice({...QueryKey, device: name.split("-")[1]});
+            setDataDevice(data.reverse());
+            setLoadingContent(false);
+            number++;
+        }catch (error){
+            Toastify({type: "error", message: (error as Error).message});
+        }
+
     }
 
     const GetListDevice = async (application: string) => {
@@ -50,6 +56,7 @@ const Device = () => {
             setLoading(false);
         }catch (err){
             setLoading(false);
+            Toastify({type: "error", message: (err as Error).message});
         }
     }
 
@@ -125,13 +132,15 @@ const Device = () => {
     }, [locate.pathname]);
 
     useEffect(() => {
-        listenBrodcast(`accept_${device}`).then((data: any) => {
+        listenBrodcast(`${authContext?.IUser.id}-${device}`).then((data: any) => {
             if(data.name === device) {
                 setDataDevice((prev) => [...prev, data]);
                 setDataCome(data);
                 number++;
             }
         });
+
+        // eslint-disable-next-line
     }, [dataCome ,device]);
 
     return(
@@ -164,7 +173,7 @@ const Device = () => {
                                             onClick={() => OnClickDevice(item, idx)}
                                         >
                                             <DeviceIcon className="w-5 h-5 fill-white"/>
-                                            <p className="text-sm font-font1">{item}</p>
+                                            <p className="text-sm font-font1">{item.split("-")[1]}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -174,7 +183,7 @@ const Device = () => {
                 </div>
                 <div className="flex flex-col space-y-2 w-full bg-blue-2 rounded-md h-[520px] px-2 py-2">
                     <div className="flex flex-row items-center space-x-2 w-full">
-                        <p className="text-sm font-font1 w-full">Data Device {device}</p>
+                        <p className="text-sm font-font1 w-full">Data Device {device.split("-")[1]}</p>
                         <div className="flex justify-end w-full px-3">
                             {device === ""? null :
                                 <Trash
@@ -222,7 +231,7 @@ const Device = () => {
                 </div>
                 <div>
                     <p className="text-white font-font1">Format Data : </p>
-                    <p className="text-white font-font1 text-sm">{JSON.stringify({name: "'name device'", data: "any json data"}, undefined, 5)}</p>
+                    <p className="text-white font-font1 text-sm">{JSON.stringify({key: `${device === ""? `${authContext?.IUser.id}-<device name>` : device}`, data: "any json data"}, undefined, 5)}</p>
                 </div>
                 <div>
                     <p className="text-white font-font1">Example : </p>

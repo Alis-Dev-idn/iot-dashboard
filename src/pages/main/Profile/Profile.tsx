@@ -47,6 +47,7 @@ const ProfileUser = () => {
             Toastify({type: "success", message: "Berhasil Menyimpan Profile"});
             if(authContext?.IUser) {
                 const user_data = {
+                    id: authContext?.IUser.id,
                     name: data.name,
                     email: data.email,
                     username: data.username,

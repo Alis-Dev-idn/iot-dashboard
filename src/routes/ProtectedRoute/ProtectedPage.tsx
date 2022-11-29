@@ -6,6 +6,7 @@ import {decryptData, sleep} from "../../utils/Utils";
 import {Loader} from "../../component";
 
 interface USER {
+    id: string;
     name: string;
     username: string;
     email: string;
@@ -27,6 +28,7 @@ const ProtectedRoute= () => {
         if(cookies.component){
             const result = await decryptData(cookies.component.data) as USER;
             authContext?.SetIUser({
+                id: result.id,
                 name: result.name,
                 username: result.username,
                 email: result.email,

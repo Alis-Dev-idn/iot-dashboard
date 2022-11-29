@@ -57,6 +57,7 @@ const Login = () => {
             const encryptRespond = generateEncrypt(response.data);
             if(encryptRespond)
                 authContext?.SetIUser({
+                    id: response.data.id,
                     name: response.data.name,
                     username: response.data.username,
                     email: response.data.email,
