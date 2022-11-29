@@ -153,15 +153,14 @@ const Device = () => {
         const interval = setInterval(() => {
             emitData("get_online", {}).then();
             listenBrodcast("get_online").then((result: any) => {
-                let newData = data;
                 if(result.length === 0) {
-                    newData = data.map((items) => {
+                    let newData = data.map((items) => {
                         return {...items, name: items.name, online: false}
                     });
                     setData((prev) => newData);
                     return;
                 }
-                newData = newData.map((items, idx) => {
+                let newData = data.map((items, idx) => {
                     for (let i = 0; i < result.length; i++) {
                         if(items.name === result[i].key) return {...items, name: items.name, online: true}
                     }
