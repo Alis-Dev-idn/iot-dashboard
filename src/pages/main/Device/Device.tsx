@@ -101,7 +101,7 @@ const Device = () => {
         uiContext?.handleConfirm({
             show: true,
             message: `Delete Device ${device.split("-")[1]}?`,
-            callback: () => handleConfirmDeleteDevice(application, device)
+            callback: () => handleConfirmDeleteDevice(application, device.split("-")[1])
         });
     }
 
