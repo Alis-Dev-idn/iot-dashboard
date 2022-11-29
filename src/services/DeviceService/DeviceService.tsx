@@ -21,8 +21,8 @@ class DeviceService {
         return response;
     }
 
-    public static async getListDevice(application: string): Promise<{data: string[]}> {
-        return await AxiosReqData("json", "json", `${this.path}/list?application=${application}`) as {data: string[]};
+    public static async getListDevice(application: string): Promise<{data: {name: string, online: boolean}[]}> {
+        return await AxiosReqData("json", "json", `${this.path}/list?application=${application}`) as {data: {name: string, online: boolean}[]};
     }
 
     public static async addNewDevice(body: {application: string, name: string}): Promise<any> {

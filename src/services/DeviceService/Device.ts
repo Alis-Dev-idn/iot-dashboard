@@ -2,7 +2,7 @@ export interface IDataDevice {
     count: number;
     data: {
         createdAt: string;
-        name: string;
+        key: string;
         data: any;
     }[];
 }

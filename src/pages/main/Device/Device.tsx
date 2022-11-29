@@ -9,7 +9,7 @@ import ApplicationService from "../../../services/ApplicationService/Application
 import {AuthContext, FormulirContext, UiContext} from "../../../context";
 import AddDevice from "./Formulir/AddDevice";
 import {parseDateTime} from "../../../utils/Utils";
-import {listenBrodcast} from "../../../services/SocketIoService/SocketIoService";
+import {emitData, listenBrodcast} from "../../../services/SocketIoService/SocketIoService";
 
 const QueryKey = {
     limit: 10,
@@ -17,6 +17,8 @@ const QueryKey = {
 }
 
 let number = 0;
+let lastDevice = "";
+
 const Device = () => {
     const locate = useLocation();
     const navigate = useNavigate();
@@ -28,9 +30,9 @@ const Device = () => {
     const [loading, setLoading] = useState(false);
     const [loadContent, setLoadingContent] = useState(false);
     const [name, setName] = useState("");
-    const [data, setData] = useState<string[]>([]);
+    const [data, setData] = useState<{name: string, online: boolean}[]>([]);
     const [device, setDevice] = useState("");
-    const [dataDevice, setDataDevice] = useState<{name: string, createdAt: string, data: any}[]>([]);
+    const [dataDevice, setDataDevice] = useState<{key: string, createdAt: string, data: any}[]>([]);
     const [dataCome, setDataCome] = useState({name: "", data: {}});
     // const [query, setQuery] = useState(QueryKey);
 
@@ -132,16 +134,42 @@ const Device = () => {
     }, [locate.pathname]);
 
     useEffect(() => {
-        listenBrodcast(`${authContext?.IUser.id}-${device}`).then((data: any) => {
-            if(data.name === device) {
-                setDataDevice((prev) => [...prev, data]);
-                setDataCome(data);
-                number++;
-            }
+        if(lastDevice !== device) setDataDevice([]);
+        listenBrodcast(device).then((data: any) => {
+            lastDevice = device;
+            if(data.key !== lastDevice) return;
+            setDataDevice((prev) => [...prev, data]);
+            setDataCome(data);
+            number++;
         });
 
         // eslint-disable-next-line
     }, [dataCome ,device]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            emitData("get_online", {}).then();
+            listenBrodcast("get_online").then((result: any) => {
+                let newData = data;
+                if(result.length === 0) {
+                    newData = data.map((items) => {
+                        return {...items, name: items.name, online: false}
+                    });
+                    setData((prev) => newData);
+                    return;
+                }
+                newData = newData.map((items, idx) => {
+                    for (let i = 0; i < result.length; i++) {
+                        if(items.name === result[i].key) return {...items, name: items.name, online: true}
+                    }
+                    return items;
+                });
+                setData((prev) => newData);
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [data]);
 
     return(
         <div className="flex flex-col space-y-2 px-2 text-white">
@@ -169,11 +197,17 @@ const Device = () => {
                                     {data.map((item, idx) => (
                                         <div
                                             key={`${item}-${idx}`}
-                                            className={`flex flex-row justify-start items-center h-[40px] border border-white rounded-md space-x-2 px-2 cursor-pointer hover:bg-sky-700 ${device === item? "bg-sky-700" : null}`}
-                                            onClick={() => OnClickDevice(item, idx)}
+                                            className={`flex flex-row justify-start items-center h-[40px] border border-white rounded-md space-x-2 px-2 cursor-pointer hover:bg-sky-700 ${device === item.name? "bg-sky-700" : null}`}
+                                            onClick={() => OnClickDevice(item.name, idx)}
                                         >
-                                            <DeviceIcon className="w-5 h-5 fill-white"/>
-                                            <p className="text-sm font-font1">{item.split("-")[1]}</p>
+                                            <div className="flex flex-row space-x-2 w-full">
+                                                <DeviceIcon className="w-5 h-5 fill-white"/>
+                                                <p className="text-sm font-font1">{item.name.split("-")[1]}</p>
+                                            </div>
+                                            <div className="flex justify-end w-full">
+                                                {item.online? <div className="w-5 h-5 rounded-full bg-green-400" title="Online"></div> : <div className="w-5 h-5 rounded-full bg-red-500" title="Offline"></div>}
+                                            </div>
+
                                         </div>
                                     ))}
                                 </div>
@@ -209,7 +243,7 @@ const Device = () => {
                                 <div className="flex flex-col space-y-2">
                                     {dataDevice.length === 0? <div>Data Not Found</div> :
                                         (dataDevice.map((items, idx) => (
-                                            <div key={`${items.name}-${idx} w-full`}>
+                                            <div key={`${items.key}-${idx} w-full`}>
                                                 <div className="flex flex-row space-x-2 w-full">
                                                     <p className="w-[140px]">{parseDateTime(items.createdAt)}</p>
                                                     <p className="w-[10px]">:</p>
