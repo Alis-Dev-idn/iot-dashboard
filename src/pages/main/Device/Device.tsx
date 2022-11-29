@@ -100,7 +100,7 @@ const Device = () => {
     const handleClickDeleteDevice = async (application: string, device: string) => {
         uiContext?.handleConfirm({
             show: true,
-            message: `Delete Device ${device}?`,
+            message: `Delete Device ${device.split("-")[1]}?`,
             callback: () => handleConfirmDeleteDevice(application, device)
         });
     }
@@ -109,7 +109,7 @@ const Device = () => {
         try{
             uiContext?.handleConfirm({
                 show: false,
-                message: `Delete Device ${device}?`
+                message: `Delete Device ${device.split("-")[1]}?`
             });
             uiContext?.handleLoading({show: true, isBlock: false});
             await DeviceService.deleteDevice({application, device});
