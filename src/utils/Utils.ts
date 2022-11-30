@@ -19,7 +19,7 @@ export const sleep = async (duration: number) => {
     });
 }
 
-export const parseDateTime = (date: string) => {
+export const parseDateTime = (date: string | number) => {
     let newDate = new Date(date);
     let years: any = newDate.getFullYear();
     let months: any = newDate.getMonth();
