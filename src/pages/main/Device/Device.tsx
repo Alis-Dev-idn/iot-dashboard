@@ -1,6 +1,6 @@
 import {useLocation, useNavigate} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
-import {Button, LoaderContent, ScrollBars, Toastify} from "../../../component";
+import {Button, LoaderContent, ScrollBars, TextInput, Toastify} from "../../../component";
 import {ReactComponent as DeviceIcon} from "../../../assets/icon/device-mobile.svg";
 import {ReactComponent as Trash} from "../../../assets/icon/trash.svg";
 // import {ReactComponent as Arrow} from "../../../assets/icon/arrow-down.svg";
@@ -34,7 +34,27 @@ const Device = () => {
     const [device, setDevice] = useState("");
     const [dataDevice, setDataDevice] = useState<{key: string, createdAt: string, data: any}[]>([]);
     const [dataCome, setDataCome] = useState({name: "", data: {}});
+    const [text, setText] = useState({cmd: ""});
     // const [query, setQuery] = useState(QueryKey);
+
+    const ChangeTextInput = (event: any) => {
+        const {name, value} = event.target;
+        setText((prev) => ({...prev, [name]: value}));
+    }
+
+    const handleKeyDown = async (e: React.KeyboardEvent) => {
+        const { key } = e;
+        if (key !== "Enter") return;
+        sendCommand();
+    };
+
+    const sendCommand = async () => {
+        if(text.cmd === "") return;
+        setText((prev) => ({...prev, cmd: ""}));
+        setDataDevice((prev) => [...prev, {key: device, data: {sending: {text: text.cmd}}, createdAt: Math.floor(new Date().setDate(new Date().getDate()))} as any]);
+        number++;
+        emitData("command", {device: device.split("-")[1], text: text.cmd}).then();
+    }
 
     const OnClickDevice = async (name: string, idx: number) => {
         try{
@@ -258,6 +278,23 @@ const Device = () => {
                                 </div>
                             </ScrollBars>
                         </LoaderContent>
+                    </div>
+                    <div className="px-2 py-1">
+                        <div className="flex flex-row items-center space-x-2">
+                            <TextInput
+                                name="cmd"
+                                value={text.cmd}
+                                placeholder="command"
+                                onChange={ChangeTextInput}
+                                onKeyDown={handleKeyDown}
+                            />
+                            <Button
+                                className="mt-0"
+                                label="Kirim"
+                                name="send"
+                                onClick={sendCommand}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
