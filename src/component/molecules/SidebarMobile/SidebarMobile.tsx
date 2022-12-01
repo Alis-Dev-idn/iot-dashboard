@@ -1,6 +1,7 @@
 import {ReactComponent as Close} from "../../../assets/icon/x-mark.svg";
 import {ReactComponent as Home} from "../../../assets/icon/home.svg";
 import {ReactComponent as Layer} from "../../../assets/icon/layer.svg";
+import {ReactComponent as Widget} from "../../../assets/icon/cubes.svg";
 import {useContext, useEffect, useState} from "react";
 import {SidebarContext} from "../../../context";
 import {Link, useLocation} from "react-router-dom";
@@ -66,6 +67,15 @@ const SidebarMobile = (props: PropTypes) => {
                         >
                             <Layer className="w-7 h-7 fill-white"/>
                             <p className="text-white font-font1">Application</p>
+                        </Link>
+
+                        <Link
+                            onClick={() => sidebarContext?.showSidebar(false)}
+                            to={"/widget"}
+                            className={`flex flex-row items-center space-x-2 w-full py-2 px-1 rounded-xl ${active === "widget"? "bg-sky-700" : null}`}
+                        >
+                            <Widget className="w-7 h-7 fill-white"/>
+                            <p className="text-white font-font1">Widget</p>
                         </Link>
                     </div>
                 </div>

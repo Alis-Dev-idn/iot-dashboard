@@ -1,6 +1,6 @@
 import {Suspense, lazy} from "react";
 import {Routes, Route} from "react-router-dom"
-import {Application, Dashboard, Device, ProfileUser} from "../../pages/main";
+import {Application, Dashboard, Device, ProfileUser, Widget} from "../../pages/main";
 import TamplateDashboard from "../../tamplates/TamplateDashboard/TamplateDashboard";
 import {LoaderSection} from "../../component";
 
@@ -37,6 +37,12 @@ const DashboardRoute = () => {
                 <Route path="/application/*" element={
                     <Suspense fallback={<LoaderSection/>}>
                         <Device/>
+                    </Suspense>
+                }/>
+
+                <Route path="/widget/*" element={
+                    <Suspense fallback={<LoaderSection/>}>
+                        <Widget/>
                     </Suspense>
                 }/>
 

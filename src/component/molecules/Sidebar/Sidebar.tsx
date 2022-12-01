@@ -1,6 +1,7 @@
 import {ReactComponent as Angles} from "../../../assets/icon/angles-right.svg";
 import {ReactComponent as Layer} from "../../../assets/icon/layer.svg";
 import {ReactComponent as Home} from "../../../assets/icon/home.svg";
+import {ReactComponent as Widget} from "../../../assets/icon/cubes.svg";
 import {useEffect, useState} from "react";
 import {Link, useLocation} from "react-router-dom";
 
@@ -57,14 +58,19 @@ const Sidebar = () => {
 
             <div className="flex flex-col items-center h-full w-full">
                 {/*Element Link*/}
-                <Link to={"/"} className={`flex flex-row items-center space-x-2 w-full py-2 px-1 rounded-xl ${active === ""? "bg-sky-700" : null}`}>
+                <Link to={"/"} className={`flex flex-row items-center space-x-2 w-full py-2 px-1 rounded-xl hover:bg-sky-700 ${active === ""? "bg-sky-700" : null}`}>
                     <Home className="w-7 h-7 fill-white"/>
                     {show? <p className="text-white font-font1">Home</p> : null}
                 </Link>
 
-                <Link to={"/application"} className={`flex flex-row items-center space-x-2 w-full py-2 px-1 rounded-xl ${active === "application"? "bg-sky-700" : null}`}>
+                <Link to={"/application"} className={`flex flex-row items-center space-x-2 w-full py-2 px-1 rounded-xl hover:bg-sky-700 ${active === "application"? "bg-sky-700" : null}`}>
                     <Layer className="w-7 h-7 fill-white"/>
                     {show? <p className="text-white font-font1">Application</p> : null}
+                </Link>
+
+                <Link to={"/widget"} className={`flex flex-row items-center space-x-2 w-full py-2 px-1 rounded-xl hover:bg-sky-700 ${active === "widget"? "bg-sky-700" : null}`}>
+                    <Widget className="w-7 h-7 fill-white"/>
+                    {show? <p className="text-white font-font1">Widget</p> : null}
                 </Link>
             </div>
         </div>
