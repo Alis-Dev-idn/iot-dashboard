@@ -1,5 +1,5 @@
 import {Oval} from "react-loader-spinner";
-import React from "react";
+import React, {ReactNode} from "react";
 
 
 interface PropType {
@@ -8,6 +8,7 @@ interface PropType {
     className?: string;
     loading?: boolean;
     isDisable?: boolean;
+    icon?: ReactNode;
     onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -21,6 +22,7 @@ const Button = (props: PropType) => {
             disabled={props.isDisable}
         >
             <div className="flex flex-row items-center space-x-2">
+                {props.icon? props.icon : null}
                 <p className="text-white font-font1">{props.label}</p>
                 {props.loading?
                     <Oval
