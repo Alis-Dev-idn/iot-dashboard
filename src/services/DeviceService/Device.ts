@@ -6,3 +6,10 @@ export interface IDataDevice {
         data: any;
     }[];
 }
+
+export interface IDeviceOptions {
+    data: {
+        label: string,
+        value: string
+    }[]
+}

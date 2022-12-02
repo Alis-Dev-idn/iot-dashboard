@@ -1,5 +1,5 @@
 import {AxiosDeleteData, AxiosPostData, AxiosReqData} from "../AxiosService";
-import {IDataDevice} from "./Device";
+import {IDataDevice, IDeviceOptions} from "./Device";
 
 interface QueryData {
     limit: number;
@@ -40,6 +40,10 @@ class DeviceService {
             .map((item) => `${item}=${query[item as QueryKey]}`)
             .join("&");
         return await AxiosReqData("json", "json", `${this.path}?${queryString}`) as IDataDevice;
+    }
+
+    public static async getOptionsDevice(application: string): Promise<IDeviceOptions> {
+        return await AxiosReqData("json", "json", `${this.path}/options?application=${application}`) as IDeviceOptions;
     }
 }
 
