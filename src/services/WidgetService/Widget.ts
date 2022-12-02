@@ -8,4 +8,16 @@ export interface IWidget {
     data: string;
     device: string;
     widget_type: string;
+    graph?: {
+        xAxis: number,
+        yAxis: number
+    }[]
+}
+
+export interface IWidgetGraph {
+    count: number;
+    data: {
+        xAxis: number,
+        yAxis: number
+    }[];
 }

@@ -1,5 +1,5 @@
 import {AxiosDeleteData, AxiosPostData, AxiosReqData} from "../AxiosService";
-import {IWidgetResponse} from "./Widget";
+import {IWidgetGraph, IWidgetResponse} from "./Widget";
 
 interface WidgetBody {
     data: string;
@@ -27,6 +27,16 @@ class WidgetService {
             .join("&");
         return await AxiosDeleteData("json", "json", `${this.path}/graph?${queryString}`);
     }
+
+    public static async getWidgetGraphData(query: WidgetBody): Promise<IWidgetGraph> {
+        type QueryKey = "data" | "application" | "device" | "widget_type";
+        const queryString = Object.keys(query)
+            .filter((key) => query[key as QueryKey] !== "")
+            .map((item) => `${item}=${query[item as QueryKey]}`)
+            .join("&");
+        return await AxiosReqData("json", "json", `${this.path}/graph?${queryString}`) as IWidgetGraph;
+    }
+
 }
 
 export default WidgetService;

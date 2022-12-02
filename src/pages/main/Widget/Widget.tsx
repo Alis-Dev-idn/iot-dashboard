@@ -7,6 +7,7 @@ import {IWidget} from "../../../services/WidgetService/Widget";
 import {Grid} from "react-loader-spinner";
 import {FormulirContext, UiContext} from "../../../context";
 import {lazy, Suspense} from "react";
+import Chart from "../../../component/molecules/Chart/Chart";
 
 const CreateNew = lazy(() => import("./component/CreateNewWidget"))
 
@@ -16,6 +17,16 @@ const Widget = () => {
 
     const [loading, setLoading] = useState(false);
     const [dataList, setDataList] = useState<IWidget[]>([]);
+
+    const handleShowForm = () => {
+        formContext?.setIFormulir({
+            show: true,
+            label: "Create New Widget",
+            children: <Suspense fallback={<LoaderSection/>}>
+                <CreateNew callback={handleGetListWidget}/>
+            </Suspense>
+        });
+    }
 
     const handleClickDelete = (data: IWidget) => {
         uiContext?.handleConfirm({
@@ -55,7 +66,7 @@ const Widget = () => {
         try{
             setLoading(true);
             const {data} = await WidgetService.getListWidget();
-            setDataList(data);
+            await executeGetDataWidget(data);
             setLoading(false);
         }catch (error){
             setLoading(false);
@@ -63,14 +74,17 @@ const Widget = () => {
         }
     }
 
-    const handleShowForm = () => {
-        formContext?.setIFormulir({
-            show: true,
-            label: "Create New Widget",
-            children: <Suspense fallback={<LoaderSection/>}>
-                <CreateNew callback={handleGetListWidget}/>
-            </Suspense>
-        });
+    const executeGetDataWidget = async (value: IWidget[]) => {
+        for (let widget of value) {
+            if(widget.widget_type === "graph") {
+                const {data} = await WidgetService.getWidgetGraphData(widget);
+                value = value.map((items) => {
+                    if(items.application === widget.application && items.data === widget.data) return {...items, graph: data}
+                    return items;
+                });
+            }
+        }
+        setDataList(value);
     }
 
     useEffect(() => {
@@ -111,6 +125,11 @@ const Widget = () => {
                                     </div>
                                 </div>
                                 <div className="h-[1px] w-full bg-white"></div>
+                            </div>
+                            <div className="">
+                                <Chart
+                                    graph={items.graph || []}
+                                />
                             </div>
                         </div>
                     ))}
