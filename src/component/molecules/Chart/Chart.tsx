@@ -75,7 +75,7 @@ const Chart = (props: PropsTypes) => {
                 >
                     <XAxis dataKey="xAxis" stroke="white" interval={2} tick={<CustomizedTick/>}/>
                     <YAxis stroke="white" interval={1}/>
-                    <Line dataKey="yAxis" dot={false} stroke="blue"/>
+                    <Line type="monotone" dataKey="yAxis" dot={false} stroke="blue" isAnimationActive={false}/>
                     <Tooltip content={<CustomTooltip/>}/>
                 </LineChart>
             </ResponsiveContainer>
