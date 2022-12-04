@@ -5,16 +5,16 @@ import {Button, LoaderSection, Toastify} from "../../../component";
 import WidgetService from "../../../services/WidgetService/WidgetService";
 import {IWidget} from "../../../services/WidgetService/Widget";
 import {Grid} from "react-loader-spinner";
-import {FormulirContext, UiContext} from "../../../context";
+import {AuthContext, FormulirContext, UiContext} from "../../../context";
 import {lazy, Suspense} from "react";
 import Chart from "../../../component/molecules/Chart/Chart";
 
 const CreateNew = lazy(() => import("./component/CreateNewWidget"))
 
 const Widget = () => {
+    const autContext = useContext(AuthContext);
     const uiContext = useContext(UiContext);
     const formContext = useContext(FormulirContext);
-
     const [loading, setLoading] = useState(false);
     const [dataList, setDataList] = useState<IWidget[]>([]);
 
@@ -43,9 +43,15 @@ const Widget = () => {
             callback: () => console.log("delete widget")
 
         });
+        console.log(data);
         try{
             uiContext?.handleLoading({show: true, isBlock: false});
-            await WidgetService.deleteWidget(data);
+            await WidgetService.deleteWidget({
+                data: data.data,
+                device: data.device,
+                application: data.application,
+                widget_type: data.widget_type
+            });
             uiContext?.handleLoading({show: false, isBlock: false});
             handleGetListWidget().then();
             Toastify({type: "success", message: `Success Delete Widget ${data.widget_type} ${data.device}`});
@@ -126,8 +132,11 @@ const Widget = () => {
                                 </div>
                                 <div className="h-[1px] w-full bg-white"></div>
                             </div>
-                            <div className="">
+                            <div className="w-full h-[150px]">
                                 <Chart
+                                    id={autContext?.IUser.id || ""}
+                                    device={items.device}
+                                    label={items.data}
                                     graph={items.graph || []}
                                 />
                             </div>
