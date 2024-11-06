@@ -30,7 +30,10 @@ jobs:
         server: ${{ secrets.FTP_HOST }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        port: 2121
+        protocol: 'ftp'
         local-dir: 'build/'
+        server-dir: 'iot-dashbord/'
         git-ftp-args: '--all'
         exclude: |
           **/.git*
